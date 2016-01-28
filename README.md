@@ -1,1 +1,1 @@
-# pybb
+# Python BookBrainz integration
