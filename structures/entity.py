@@ -72,11 +72,11 @@ class Creator(Entity):
     gender_id = None
 
     gender = None
-    creator_type = None
 
 
 class Publication(Entity):
     publication_type = None
+
 
 class Edition(Entity):
     edition_type = None

@@ -17,6 +17,7 @@
 
 from structures.base import Base
 
+
 class Annotation(Base):
     annotation_id = None
     content = None

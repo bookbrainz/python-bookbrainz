@@ -17,17 +17,21 @@
 
 from structures.base import Base
 
+
 class WorkType(Base):
     work_type_id = None
     label = None
+
 
 class PublicationType(Base):
     publication_type_id = None
     label = None
 
+
 class CreatorType(Base):
     creator_type_id = None
     label = None
+
 
 class PublisherType(Base):
     publisher_type_id = None
