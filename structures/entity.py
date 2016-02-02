@@ -49,7 +49,7 @@ class Entity(Base):
     revision = None
 
 
-class Creator(Entity):
+class CreatorOnly(object):
     creator_type = None
 
     begin_date = None
@@ -74,11 +74,19 @@ class Creator(Entity):
     gender = None
 
 
-class Publication(Entity):
+class Creator(CreatorOnly, Entity):
+    pass
+
+
+class PublicationOnly(object):
     publication_type = None
 
 
-class Edition(Entity):
+class Publication(PublicationOnly, Entity):
+    pass
+
+
+class EditionOnly(object):
     edition_type = None
 
     release_date = None
@@ -106,7 +114,11 @@ class Edition(Entity):
     publication = None
 
 
-class Publisher(Entity):
+class Edition(EditionOnly, Entity):
+    pass
+
+
+class PublisherOnly(object):
     publisher_type = None
 
     begin_date = None
@@ -126,9 +138,17 @@ class Publisher(Entity):
     ended = None
 
 
-class Work(Entity):
+class Publisher(PublicationOnly, Entity):
+    pass
+
+
+class WorkOnly(object):
     work_type = None
     languages = None
+
+
+class Work(WorkOnly, Entity):
+    pass
 
 
 def format_date(date, precision):
