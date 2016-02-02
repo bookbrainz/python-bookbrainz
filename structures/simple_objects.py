@@ -55,3 +55,13 @@ class Gender(Base):
 class Language(Base):
     language_id = None
     name = None
+
+
+class EditionFormat(Base):
+    edition_format_id = None
+    label = None
+
+
+class EditionStatus(Base):
+    edition_status_id = None
+    label = None
