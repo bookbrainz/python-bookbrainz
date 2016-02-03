@@ -26,7 +26,7 @@ class Annotation(Base):
         self.content = None
         self.created_at = None
 
-    def fetch_from_json(self, json_data):
+    def _fetch_from_json(self, json_data):
         self.annotation_id = json_data['annotation_id']
         self.content = json_data['content']
         self.created_at = json_data['created_at']
@@ -39,7 +39,7 @@ class Disambiguation(Base):
         self.disambiguation_id = None
         self.comment = None
 
-    def fetch_from_json(self, json_data):
+    def _fetch_from_json(self, json_data):
         self.disambiguation_id = json_data['disambiguation_id']
         self.comment = json_data['comment']
 
@@ -53,7 +53,7 @@ class Alias(Base):
         self.primary = None
         self.language = None
 
-    def fetch_from_json(self, json_data):
+    def _fetch_from_json(self, json_data):
         self.alias_id = json_data['alias_id']
         self.name = json_data['name']
         self.sort_name = json_data['sort_name']
@@ -70,12 +70,11 @@ class Identifier(Base):
         self.identifier_type = None
         self.value = None
 
-    def fetch_from_json(self, json_data):
+    def _fetch_from_json(self, json_data):
         self.identifier_id = json_data['identifier_id']
         self.value = json_data['value']
 
-        self.identifier_type = IdentifierType()
-        self.identifier_type.fetch_from_json(json_data)
+        self.identifier_type = IdentifierType.from_json(json_data)
 
 
 class IdentifierType(Base):
@@ -85,7 +84,7 @@ class IdentifierType(Base):
         self.identifier_type_id = None
         self.label = None
 
-    def fetch_from_json(self, json_data):
+    def _fetch_from_json(self, json_data):
         self.identifier_type_id = json_data['identifier_type_id']
         self.label = json_data['label']
 
@@ -97,7 +96,7 @@ class Gender(Base):
         self.gender_id = None
         self.name = None
 
-    def fetch_from_json(self, json_data):
+    def _fetch_from_json(self, json_data):
         self.gender_id = json_data['gender_id']
         self.name = json_data['name']
 
@@ -109,7 +108,7 @@ class Language(Base):
     language_id = None
     name = None
 
-    def fetch_from_json(self, json_data):
+    def _fetch_from_json(self, json_data):
         self.language_id = json_data['language_id']
         self.name = json_data['name']
 
@@ -121,7 +120,7 @@ class EditionFormat(Base):
         self.edition_format_id = None
         self.label = None
 
-    def fetch_from_json(self, json_data):
+    def _fetch_from_json(self, json_data):
         self.edition_format_id = json_data['edition_format_id']
         self.label = json_data['label']
 
@@ -133,6 +132,7 @@ class EditionStatus(Base):
         self.edition_status_id = None
         self.label = None
 
-    def fetch_from_json(self, json_data):
+    def _fetch_from_json(self, json_data):
         self.edition_status_id = json_data['edition_status_id']
         self.label = json_data['label']
+
