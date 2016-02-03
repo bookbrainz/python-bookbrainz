@@ -33,5 +33,5 @@ class Base(object):
     @classmethod
     def from_json(cls, json_data):
         instance = cls()
-        instance._fetch_from_json(json_data)
+        instance.fetch_from_json(json_data)
         return instance
