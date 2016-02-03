@@ -19,7 +19,9 @@
 base class for all resource models specified in this package."""
 
 from base import Base
-
+from simple_objects import Alias, Identifier, Relationship, \
+    Disambiguation, Annotation
+from revision import Revision
 
 class Entity(Base):
     """Resource class, from which all other resource models are derived."""
@@ -29,8 +31,6 @@ class Entity(Base):
         self.uri = None
         self.type = None
 
-        self.default_alias_id = None
-
         self.last_updated = None
 
         self.annotation = None
@@ -39,6 +39,7 @@ class Entity(Base):
         self.disambiguation = None
         self.disambiguation_uri = None
 
+        self.default_alias = None
         self.aliases = None
         self.aliases_uri = None
 
@@ -49,6 +50,45 @@ class Entity(Base):
         self.relationships_uri = None
 
         self.revision = None
+
+    def fetch_from_json(self, json_data):
+        self.entity_gid = json_data['entity_gid']
+        self.uri = json_data['uri']
+        self.type = json_data['_type']
+
+        self.last_updated = json_data['last_updated']
+        self.default_alias = Alias.from_json(json_data['default_alias'])
+
+        if 'aliases' in json_data:
+            self.aliases = aliases_from_json(json_data['aliases'])
+
+        if 'relationships' in json_data:
+            self.relationships = \
+                relationships_from_json(json_data['relationships'])
+
+        if 'identifiers' in json_data:
+            self.identifiers = identifiers_from_json(json_data['identifiers'])
+
+        if 'annotation' in json_data:
+            self.annotation = Annotation.from_json(json_data['annotation'])
+
+        if 'disambiguation' in json_data:
+            self.disambiguation = \
+                Disambiguation.from_json(json_data['disambiguation'])
+
+        self.revision = Revision.from_json(json_data['revision'])
+
+
+def aliases_from_json(json_data):
+    return [Alias.from_json(alias) for alias in json_data['objects']]
+
+
+def identifiers_from_json(json_data):
+    return [Identifier.from_json(id) for id in json_data['objects']]
+
+
+def relationships_from_json(json_data):
+    return [Relationship.from_json(rel) for rel in json_data['objects']]
 
 
 def format_date(date, precision):
