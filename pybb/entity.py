@@ -96,7 +96,6 @@ class Entity(Base):
             self.disambiguation = None
 
 
-
 def aliases_from_json(json_data):
     return [Alias.from_json(alias) for alias in json_data['objects']]
 

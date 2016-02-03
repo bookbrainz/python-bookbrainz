@@ -43,6 +43,7 @@ class Disambiguation(Base):
         self.disambiguation_id = json_data['disambiguation_id']
         self.comment = json_data['comment']
 
+
 class Alias(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
@@ -61,6 +62,7 @@ class Alias(Base):
 
         self.language = Language()
         self.language.fetch_from_json(json_data['language'])
+
 
 class Identifier(Base):
     def __init__(self):
@@ -135,4 +137,3 @@ class EditionStatus(Base):
     def _fetch_from_json(self, json_data):
         self.edition_status_id = json_data['edition_status_id']
         self.label = json_data['label']
-
