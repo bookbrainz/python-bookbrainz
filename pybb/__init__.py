@@ -13,3 +13,5 @@ from revision import EntityRevision
 
 from simple_objects import Identifier, IdentifierType, Alias, Annotation,\
     Disambiguation, Language, EditionStatus, EditionFormat, Gender
+
+from agent import Agent
