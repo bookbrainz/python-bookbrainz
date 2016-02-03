@@ -19,9 +19,10 @@
 base class for all resource models specified in this package."""
 
 from base import Base
-from simple_objects import Alias, Identifier, Relationship, \
-    Disambiguation, Annotation
-from revision import Revision
+from simple_objects import Alias, Identifier, Disambiguation, Annotation
+from relationship import Relationship
+from revision import EntityRevision
+
 
 class Entity(Base):
     """Resource class, from which all other resource models are derived."""
@@ -51,32 +52,48 @@ class Entity(Base):
 
         self.revision = None
 
-    def fetch_from_json(self, json_data):
+    def _fetch_from_json(self, json_data):
         self.entity_gid = json_data['entity_gid']
         self.uri = json_data['uri']
         self.type = json_data['_type']
-
+        self.revision = EntityRevision.from_json(json_data['revision'])
         self.last_updated = json_data['last_updated']
+
         self.default_alias = Alias.from_json(json_data['default_alias'])
+
+        self.aliases_uri = json_data['aliases_uri']
+        self.relationships_uri = json_data['relationships_uri']
+        self.identifiers_uri = json_data['identifiers_uri']
+        self.disambiguation_uri = json_data['disambiguation_uri']
+        self.annotation_uri = json_data['annotation_uri']
 
         if 'aliases' in json_data:
             self.aliases = aliases_from_json(json_data['aliases'])
+        else:
+            self.aliases = None
 
         if 'relationships' in json_data:
             self.relationships = \
                 relationships_from_json(json_data['relationships'])
+        else:
+            self.relationships = None
 
         if 'identifiers' in json_data:
             self.identifiers = identifiers_from_json(json_data['identifiers'])
+        else:
+            self.identifiers = None
 
         if 'annotation' in json_data:
             self.annotation = Annotation.from_json(json_data['annotation'])
+        else:
+            self.annotation = None
 
         if 'disambiguation' in json_data:
             self.disambiguation = \
                 Disambiguation.from_json(json_data['disambiguation'])
+        else:
+            self.disambiguation = None
 
-        self.revision = Revision.from_json(json_data['revision'])
 
 
 def aliases_from_json(json_data):
