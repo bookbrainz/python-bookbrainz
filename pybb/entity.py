@@ -57,6 +57,7 @@ class Entity(Base):
         self.uri = json_data['uri']
         self.type = json_data['_type']
         self.revision = EntityRevision.from_json(json_data['revision'])
+        # TODO change to datetime format
         self.last_updated = json_data['last_updated']
 
         self.default_alias = Alias.from_json(json_data['default_alias'])
