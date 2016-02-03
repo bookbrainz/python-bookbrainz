@@ -22,10 +22,16 @@ class Base(object):
             setattr(self, key, value)
 
     def fetch_from_json(self, json_data):
+        if json_data is None:
+            self.__init__()
+        else:
+            self._fetch_from_json(json_data)
+
+    def _fetch_from_json(self, json_data):
         raise NotImplementedError
 
     @classmethod
     def from_json(cls, json_data):
         instance = cls()
-        instance.fetch_from_json(json_data)
+        instance._fetch_from_json(json_data)
         return instance
