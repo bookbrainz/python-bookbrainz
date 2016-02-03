@@ -21,66 +21,118 @@ from base import Base
 class Annotation(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
+
         self.annotation_id = None
         self.content = None
         self.created_at = None
+
+    def fetch_from_json(self, json_data):
+        self.annotation_id = json_data['annotation_id']
+        self.content = json_data['content']
+        self.created_at = json_data['created_at']
 
 
 class Disambiguation(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
+
         self.disambiguation_id = None
         self.comment = None
 
+    def fetch_from_json(self, json_data):
+        self.disambiguation_id = json_data['disambiguation_id']
+        self.comment = json_data['comment']
 
 class Alias(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
+
         self.alias_id = None
         self.name = None
         self.sort_name = None
-        self.language = None
         self.primary = None
+        self.language = None
 
+    def fetch_from_json(self, json_data):
+        self.alias_id = json_data['alias_id']
+        self.name = json_data['name']
+        self.sort_name = json_data['sort_name']
+        self.primary = json_data['primary']
+
+        self.language = Language()
+        self.language.fetch_from_json(json_data['language'])
 
 class Identifier(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
-    identifier_id = None
-    identifier_type = None
-    value = None
+
+        self.identifier_id = None
+        self.identifier_type = None
+        self.value = None
+
+    def fetch_from_json(self, json_data):
+        self.identifier_id = json_data['identifier_id']
+        self.value = json_data['value']
+
+        self.identifier_type = IdentifierType()
+        self.identifier_type.fetch_from_json(json_data)
 
 
 class IdentifierType(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
-    identifier_type_id = None
-    label = None
+
+        self.identifier_type_id = None
+        self.label = None
+
+    def fetch_from_json(self, json_data):
+        self.identifier_type_id = json_data['identifier_type_id']
+        self.label = json_data['label']
 
 
 class Gender(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
-    id = None
-    name = None
+
+        self.gender_id = None
+        self.name = None
+
+    def fetch_from_json(self, json_data):
+        self.gender_id = json_data['gender_id']
+        self.name = json_data['name']
 
 
 class Language(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
+
     language_id = None
     name = None
+
+    def fetch_from_json(self, json_data):
+        self.language_id = json_data['language_id']
+        self.name = json_data['name']
 
 
 class EditionFormat(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
-    edition_format_id = None
-    label = None
+
+        self.edition_format_id = None
+        self.label = None
+
+    def fetch_from_json(self, json_data):
+        self.edition_format_id = json_data['edition_format_id']
+        self.label = json_data['label']
 
 
 class EditionStatus(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
-    edition_status_id = None
-    label = None
+
+        self.edition_status_id = None
+        self.label = None
+
+    def fetch_from_json(self, json_data):
+        self.edition_status_id = json_data['edition_status_id']
+        self.label = json_data['label']
