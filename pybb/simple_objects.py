@@ -15,54 +15,72 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from structures.base import Base
+from base import Base
 
 
 class Annotation(Base):
-    annotation_id = None
-    content = None
-    created_at = None
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.annotation_id = None
+        self.content = None
+        self.created_at = None
 
 
 class Disambiguation(Base):
-    disambiguation_id = None
-    comment = None
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.disambiguation_id = None
+        self.comment = None
 
 
 class Alias(Base):
-    alias_id = None
-    name = None
-    sort_name = None
-    language = None
-    primary = None
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.alias_id = None
+        self.name = None
+        self.sort_name = None
+        self.language = None
+        self.primary = None
 
 
 class Identifier(Base):
+    def __init__(self):
+        super(self.__class__, self).__init__()
     identifier_id = None
     identifier_type = None
     value = None
 
 
 class IdentifierType(Base):
+    def __init__(self):
+        super(self.__class__, self).__init__()
     identifier_type_id = None
     label = None
 
 
 class Gender(Base):
+    def __init__(self):
+        super(self.__class__, self).__init__()
     id = None
     name = None
 
 
 class Language(Base):
+    def __init__(self):
+        super(self.__class__, self).__init__()
     language_id = None
     name = None
 
 
 class EditionFormat(Base):
+    def __init__(self):
+        super(self.__class__, self).__init__()
     edition_format_id = None
     label = None
 
 
 class EditionStatus(Base):
+    def __init__(self):
+        super(self.__class__, self).__init__()
     edition_status_id = None
     label = None

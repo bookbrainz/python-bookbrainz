@@ -15,24 +15,32 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from structures.base import Base
+from base import Base
 
 
 class WorkType(Base):
-    work_type_id = None
-    label = None
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.work_type_id = None
+        self.label = None
 
 
 class PublicationType(Base):
-    publication_type_id = None
-    label = None
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.publication_type_id = None
+        self.label = None
 
 
 class CreatorType(Base):
-    creator_type_id = None
-    label = None
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.creator_type_id = None
+        self.label = None
 
 
 class PublisherType(Base):
-    publisher_type_id = None
-    label = None
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.publisher_type_id = None
+        self.label = None
