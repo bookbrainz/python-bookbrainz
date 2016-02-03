@@ -15,3 +15,4 @@ from simple_objects import Identifier, IdentifierType, Alias, Annotation,\
     Disambiguation, Language, EditionStatus, EditionFormat, Gender
 
 from agent import Agent
+default_agent = Agent()
