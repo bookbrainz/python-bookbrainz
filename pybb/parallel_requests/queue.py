@@ -32,7 +32,7 @@ class RequestQueue(object):
         return result_dict
 
     def get_request(self, uri):
-        return self.request(grequests.get(uri)
+        return self.request(grequests.get(uri))
 
     def send_all(self):
         responses = grequests.map(self.requests)
