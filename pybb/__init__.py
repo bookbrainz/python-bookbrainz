@@ -1,5 +1,8 @@
 from base import Base
 
+from agent import Agent
+default_agent = Agent()
+
 from entity import Entity
 from creator import Creator
 from work import Work
@@ -14,5 +17,3 @@ from revision import EntityRevision
 from simple_objects import Identifier, IdentifierType, Alias, Annotation,\
     Disambiguation, Language, EditionStatus, EditionFormat, Gender
 
-from agent import Agent
-default_agent = Agent()
