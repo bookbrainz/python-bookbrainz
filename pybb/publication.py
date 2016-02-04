@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from entity import Entity
-from entity_types import PublisherType
+from entity_types import PublicationType
 
 
 class Publication(Entity):
@@ -28,5 +28,5 @@ class Publication(Entity):
         super(self.__class__, self).fetch_from_json(json_data)
 
         self.publication_type = \
-            PublisherType.from_json(json_data['publication_type'])
+            PublicationType.from_json(json_data['publication_type'])
 
