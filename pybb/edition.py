@@ -16,12 +16,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from entity import Entity, format_date
+from dateutil.parser import parse as parse_date
+from simple_objects import CreatorCredit, Language, EditionFormat, EditionStatus
 
 
 class Edition(Entity):
     def __init__(self):
         super(self.__class__, self).__init__()
-        self.edition_type = None
 
         self.release_date = None
         self.release_date_precision = None
@@ -40,8 +41,36 @@ class Edition(Entity):
         self.language = None
         self.edition_format = None
         self.edition_status = None
-        self.publisher = None
-        self.publication = None
+
+        self.publisher_uri = None
+        self.publication_uri = None
+
+    def fetch_from_json_filled(self, json_data):
+        super(self.__class__, self).fetch_from_json(json_data)
+
+        self.release_date = parse_date(json_data['release_date']).date()
+        self.release_date_precision = json_data['release_date_precision']
+
+        self.pages = json_data['pages']
+
+        self.width = json_data['width']
+        self.height = json_data['height']
+        self.depth = json_data['depth']
+
+        self.weight = json_data['weight']
+
+        self.creator_credit = \
+            CreatorCredit.from_json(json_data['creator_credit'])
+        self.language = \
+            Language.from_json(json_data['language'])
+        self.edition_format = \
+            EditionFormat.from_json(json_data['edition_format'])
+        self.edition_status = \
+            EditionStatus.from_json(json_data['edition_status'])
+
+        self.publisher_uri = json_data['publisher_uri']
+        self.publication_uri = json_data['publication_uri']
 
     def release(self):
         return format_date(self.release_date, self.release_date_precision)
+
