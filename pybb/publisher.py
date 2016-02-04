@@ -36,10 +36,10 @@ class Publisher(Entity):
     def fetch_from_json_filled(self, json_data):
         super(self.__class__, self).fetch_from_json(json_data)
 
-        self.begin_date = parse_date(json_data['begin_date'])
+        self.begin_date = parse_date(json_data['begin_date']).date()
         self.begin_date_precision = json_data['begin_date_precision']
 
-        self.end_date = parse_date(json_data['end_date'])
+        self.end_date = parse_date(json_data['end_date']).date()
         self.end_date_precision = json_data['end_date_precision']
 
         self.publisher_type = \
