@@ -31,7 +31,7 @@ class EntityRevision(Base):
         self.entity_uri = None
         self.uri = None
 
-    def _fetch_from_json(self, json_data):
+    def fetch_from_json_filled(self, json_data):
         self.created_at = json_data['created_at']
         self.entity_uri = json_data['entity_uri']
         self.note = json_data['note']

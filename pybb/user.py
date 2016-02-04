@@ -23,5 +23,5 @@ class User(Base):
         super(self.__class__, self).__init__()
         self.user_id = None
 
-    def _fetch_from_json(self, json_data):
+    def fetch_from_json_filled(self, json_data):
         self.user_id = json_data['user_id']

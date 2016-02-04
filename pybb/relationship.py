@@ -29,7 +29,7 @@ class Relationship(Base):
         self.texts = None
         self.uri = None
 
-    def _fetch_from_json(self, json_data):
+    def fetch_from_json_filled(self, json_data):
         self.last_updated = json_data['last_updated']
         self.relationship_id = json_data['relationship_id']
         self.uri = json_data['uri']
@@ -53,7 +53,7 @@ class RelationshipType(Base):
         self.child_order = None
         self.parent = None
 
-    def _fetch_from_json(self, json_data):
+    def fetch_from_json_filled(self, json_data):
         self.relationship_type_id = json_data['relationship_type_id']
         self.label = json_data['label']
         self.deprecated = json_data['deprecated']
@@ -71,7 +71,7 @@ class RelationshipEntity(Base):
         self.uri = None
         self.position = None
 
-    def _fetch_from_json(self, json_data):
+    def fetch_from_json_filled(self, json_data):
         self.type = json_data['entity']['_type']
         self.entity_gid = json_data['entity']['entity_gid']
         self.uri = json_data['entity']['uri']
@@ -84,7 +84,7 @@ class RelationshipText(Base):
         self.position = None
         self.text = None
 
-    def _fetch_from_json(self, json_data):
+    def fetch_from_json_filled(self, json_data):
         self.position = json_data['position']
         self.text = json_data['text']
 

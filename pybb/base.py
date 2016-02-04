@@ -25,9 +25,9 @@ class Base(object):
         if json_data is None:
             self.__init__()
         else:
-            self._fetch_from_json(json_data)
+            self.fetch_from_json_filled(json_data)
 
-    def _fetch_from_json(self, json_data):
+    def fetch_from_json_filled(self, json_data):
         raise NotImplementedError
 
     @classmethod

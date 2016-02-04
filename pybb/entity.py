@@ -52,7 +52,7 @@ class Entity(Base):
 
         self.revision = None
 
-    def _fetch_from_json(self, json_data):
+    def fetch_from_json_filled(self, json_data):
         self.entity_gid = json_data['entity_gid']
         self.uri = json_data['uri']
         self.type = json_data['_type']
