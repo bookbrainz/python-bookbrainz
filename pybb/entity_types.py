@@ -24,12 +24,20 @@ class WorkType(Base):
         self.work_type_id = None
         self.label = None
 
+    def fetch_from_json_filled(self, json_data):
+        self.work_type_id = json_data['work_type_id']
+        self.label = json_data['label']
+
 
 class PublicationType(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
         self.publication_type_id = None
         self.label = None
+
+    def fetch_from_json_filled(self, json_data):
+        self.work_type_id = json_data['publication_type_id']
+        self.label = json_data['label']
 
 
 class CreatorType(Base):
@@ -38,9 +46,17 @@ class CreatorType(Base):
         self.creator_type_id = None
         self.label = None
 
+    def fetch_from_json_filled(self, json_data):
+        self.work_type_id = json_data['creator_type_id']
+        self.label = json_data['label']
+
 
 class PublisherType(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
         self.publisher_type_id = None
         self.label = None
+
+    def fetch_from_json_filled(self, json_data):
+        self.work_type_id = json_data['publisher_type_id']
+        self.label = json_data['label']
