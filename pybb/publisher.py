@@ -15,7 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dateutil.parser import parse as parse_date
 from entity import Entity, format_date
+from entity_types import PublisherType
 
 
 class Publisher(Entity):
@@ -30,6 +32,20 @@ class Publisher(Entity):
         self.end_date_precision = None
 
         self.ended = None
+
+    def fetch_from_json_filled(self, json_data):
+        super(self.__class__, self).fetch_from_json(json_data)
+
+        self.begin_date = parse_date(json_data['begin_date'])
+        self.begin_date_precision = json_data['begin_date_precision']
+
+        self.end_date = parse_date(json_data['end_date'])
+        self.end_date_precision = json_data['end_date_precision']
+
+        self.publisher_type = \
+            PublisherType.from_json(json_data['publisher_type'])
+
+        self.ended = json_data['ended']
 
     def begin(self):
         return format_date(self.begin_date, self.begin_date_precision)
