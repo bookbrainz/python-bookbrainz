@@ -16,10 +16,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from entity import Entity
+from entity_types import WorkType
+from simple_objects import Language
 
 
-class Work(Entity):
+class Publisher(Entity):
     def __init__(self):
         super(self.__class__, self).__init__()
         self.work_type = None
         self.languages = None
+
+    def fetch_from_json_filled(self, json_data):
+        super(self.__class__, self).fetch_from_json(json_data)
+        self.work_type = WorkType.from_json(json_data['work_type'])
+        self.languages = languages_from_json(json_data['languages'])
+
+
+def languages_from_json(json_data):
+    return [Language.from_json(lang) for lang in json_data]
