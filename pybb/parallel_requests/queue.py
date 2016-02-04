@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import grequests
-
+import json
 
 class RequestQueue(object):
     def __init__(self):
@@ -37,7 +37,8 @@ class RequestQueue(object):
     def send_all(self):
         responses = grequests.map([ob.request for ob in self.requests])
         for index, response in enumerate(responses):
-            self.requests[index].result_dict = response.json
+            content = json.loads(response.content)
+            self.requests[index].result_dict.update(content)
         self.clear()
 
 
