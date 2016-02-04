@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from base import Base
-
+from dateutil.parser import parse as parse_date
 
 class Relationship(Base):
     def __init__(self):
@@ -30,7 +30,7 @@ class Relationship(Base):
         self.uri = None
 
     def fetch_from_json_filled(self, json_data):
-        self.last_updated = json_data['last_updated']
+        self.last_updated = parse_date(json_data['last_updated'])
         self.relationship_id = json_data['relationship_id']
         self.uri = json_data['uri']
 
