@@ -22,10 +22,9 @@ from base import Base
 from simple_objects import Alias, Identifier, Disambiguation, Annotation
 from relationship import Relationship
 from revision import EntityRevision
-
+from dateutil.parser import parse as parse_date
 
 class Entity(Base):
-    """Resource class, from which all other resource models are derived."""
     def __init__(self):
         super(self.__class__, self).__init__()
         self.entity_gid = None
@@ -57,8 +56,7 @@ class Entity(Base):
         self.uri = json_data['uri']
         self.type = json_data['_type']
         self.revision = EntityRevision.from_json(json_data['revision'])
-        # TODO change to datetime format
-        self.last_updated = json_data['last_updated']
+        self.last_updated = parse_date(json_data['last_updated'])
 
         self.default_alias = Alias.from_json(json_data['default_alias'])
 
