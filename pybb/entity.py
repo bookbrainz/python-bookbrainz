@@ -97,7 +97,7 @@ class Entity(Base):
             self.disambiguation = None
 
     @classmethod
-    def get_multiple_ids(cls, ids, included, agent=default_agent):
+    def get_multiple_ids(cls, ids, included=[], agent=default_agent):
         request_queue = RequestQueue()
         responses_json = []
 
