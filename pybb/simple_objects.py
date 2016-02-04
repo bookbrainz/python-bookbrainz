@@ -137,3 +137,21 @@ class EditionStatus(Base):
     def fetch_from_json_filled(self, json_data):
         self.edition_status_id = json_data['edition_status_id']
         self.label = json_data['label']
+
+
+class CreatorCredit(Base):
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.begin_phrase = None
+        self.creator_credit_id = None
+        self.names = None
+
+    def fetch_from_json_filled(self, json_data):
+        self.begin_phrase = json_data['begin_phrase']
+        self.creator_credit_id = json_data['creator_credit_id']
+        self.names = None # TODO implement it
+
+
+# TODO implement it
+class CreatorCreditName(Base):
+    pass
