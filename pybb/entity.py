@@ -22,8 +22,9 @@ from base import Base
 from simple_objects import Alias, Identifier, Disambiguation, Annotation
 from relationship import Relationship
 from revision import EntityRevision
+from parallel_requests import RequestQueue
 from dateutil.parser import parse as parse_date
-
+from pybb import default_agent
 
 class Entity(Base):
     def __init__(self):
@@ -93,6 +94,81 @@ class Entity(Base):
                 Disambiguation.from_json(json_data['disambiguation'])
         else:
             self.disambiguation = None
+
+    @classmethod
+    def get_multiple_ids(cls, ids, included, agent=default_agent):
+        request_queue = RequestQueue()
+        responses_json = []
+
+        for id in ids:
+            responses_json.append(
+                Entity._add_id_get(id, request_queue, included, agent)
+            )
+
+        request_queue.send_all()
+
+        entities = [Entity.from_json(json_data) for json_data in responses_json]
+        return entities
+
+    @classmethod
+    def _add_id_get(cls, id, request_queue, included, agent):
+        entity_request = request_queue.get_request(Entity.get_uri(id, agent))
+
+        if 'aliases' in included:
+            entity_request['aliases'] = \
+                request_queue.get_request(
+                    Entity.get_aliases_uri(id, agent)
+                )
+
+        if 'relationships' in included:
+            entity_request['relationships'] = \
+                request_queue.get_request(
+                    Entity.get_relationships_uri(id, agent)
+                )
+
+        if 'identifiers' in included:
+            entity_request['identifiers'] = \
+                request_queue.get_request(
+                    Entity.get_identifiers_uri(id, agent)
+                )
+
+        if 'annotation' in included:
+            entity_request['annotation'] = \
+                request_queue.get_request(
+                    Entity.get_annotation_uri(id, agent)
+                )
+
+        if 'disambiguation' in included:
+            entity_request['disambiguation'] = \
+                request_queue.get_request(
+                    Entity.get_disambiguation_uri(id, agent)
+                )
+
+        return entity_request
+
+    @classmethod
+    def get_uri(cls, id, agent):
+        return '{}/entity/{}'.format(agent.host_name, id)
+
+    @classmethod
+    def get_aliases_uri(cls, id, agent):
+        return '{}/entity/{}/aliases'.format(agent.host_name, id)
+
+    @classmethod
+    def get_relationships_uri(cls, id, agent):
+        return '{}/entity/{}/relationships'.format(agent.host_name, id)
+
+    @classmethod
+    def get_identifiers_uri(cls, id, agent):
+        return '{}/entity/{}/identifiers'.format(agent.host_name, id)
+
+    @classmethod
+    def get_annotation_uri(cls, id, agent):
+        return '{}/entity/{}/annotation'.format(agent.host_name, id)
+
+    @classmethod
+    def get_disambiguation_uri(cls, id, agent):
+        return '{}/entity/{}/disambiguation'.format(agent.host_name, id)
 
 
 def aliases_from_json(json_data):
