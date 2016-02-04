@@ -16,7 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from entity import Entity, format_date
-
+from entity_types import CreatorType
+from dateutil.parser import parse as parse_date
+from simple_objects import Gender
 
 class Creator(Entity):
     def __init__(self):
@@ -30,11 +32,23 @@ class Creator(Entity):
         self.end_date_precision = None
 
         self.ended = None
-
         self.country_id = None
-        self.gender_id = None
-
         self.gender = None
+
+    def fetch_from_json_filled(self, json_data):
+        super(self.__class__, self).fetch_from_json(json_data)
+
+        self.begin_date = parse_date(json_data['begin_date'])
+        self.begin_date_precision = json_data['begin_date_precision']
+
+        self.end_date = parse_date(json_data['end_date'])
+        self.end_date_precision = json_data['end_date_precision']
+
+        self.creator_type = \
+            CreatorType.from_json(json_data['creator_type'])
+        self.gender = \
+            Gender.from_json(json_data['creator'])
+        self.ended = json_data['ended']
 
     def begin(self):
         return format_date(self.begin_date, self.begin_date_precision)
