@@ -149,7 +149,7 @@ class CreatorCredit(Base):
     def fetch_from_json_filled(self, json_data):
         self.begin_phrase = json_data['begin_phrase']
         self.creator_credit_id = json_data['creator_credit_id']
-        self.names = None # TODO implement it
+        self.names = None  # TODO implement it
 
 
 # TODO implement it

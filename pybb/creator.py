@@ -20,6 +20,7 @@ from entity_types import CreatorType
 from dateutil.parser import parse as parse_date
 from simple_objects import Gender
 
+
 class Creator(Entity):
     def __init__(self):
         super(self.__class__, self).__init__()

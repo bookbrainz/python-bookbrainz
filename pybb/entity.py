@@ -24,6 +24,7 @@ from relationship import Relationship
 from revision import EntityRevision
 from dateutil.parser import parse as parse_date
 
+
 class Entity(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
