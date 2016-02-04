@@ -35,7 +35,7 @@ class RequestQueue(object):
         return self.request(grequests.get(uri))
 
     def send_all(self):
-        responses = grequests.map(self.requests)
+        responses = grequests.map([ob.request for ob in self.requests])
         for index, response in enumerate(responses):
             self.requests[index].result_dict = response.json
         self.clear()
