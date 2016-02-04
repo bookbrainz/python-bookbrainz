@@ -26,6 +26,7 @@ from parallel_requests import RequestQueue
 from dateutil.parser import parse as parse_date
 from pybb import default_agent
 
+
 class Entity(Base):
     def __init__(self):
         super(self.__class__, self).__init__()
