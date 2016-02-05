@@ -103,46 +103,46 @@ class Entity(Base):
 
         for id in ids:
             responses_json.append(
-                Entity._add_id_get(id, request_queue, included, agent)
+                cls.add_id_get(id, request_queue, included, agent)
             )
 
         request_queue.send_all()
 
-        entities = [Entity.from_json(json_data) for json_data in responses_json]
+        entities = [cls.from_json(json_data) for json_data in responses_json]
         return entities
 
     @classmethod
-    def _add_id_get(cls, id, request_queue, included, agent):
-        entity_request = request_queue.get_request(Entity.get_uri(id, agent))
+    def add_id_get(cls, id, request_queue, included, agent):
+        entity_request = request_queue.get_request(cls.get_uri(id, agent))
 
         if 'aliases' in included:
             entity_request['aliases'] = \
                 request_queue.get_request(
-                    Entity.get_aliases_uri(id, agent)
+                    cls.get_aliases_uri(id, agent)
                 )
 
         if 'relationships' in included:
             entity_request['relationships'] = \
                 request_queue.get_request(
-                    Entity.get_relationships_uri(id, agent)
+                    cls.get_relationships_uri(id, agent)
                 )
 
         if 'identifiers' in included:
             entity_request['identifiers'] = \
                 request_queue.get_request(
-                    Entity.get_identifiers_uri(id, agent)
+                    cls.get_identifiers_uri(id, agent)
                 )
 
         if 'annotation' in included:
             entity_request['annotation'] = \
                 request_queue.get_request(
-                    Entity.get_annotation_uri(id, agent)
+                    cls.get_annotation_uri(id, agent)
                 )
 
         if 'disambiguation' in included:
             entity_request['disambiguation'] = \
                 request_queue.get_request(
-                    Entity.get_disambiguation_uri(id, agent)
+                    cls.get_disambiguation_uri(id, agent)
                 )
 
         return entity_request
