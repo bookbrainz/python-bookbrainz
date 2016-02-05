@@ -30,6 +30,6 @@ class Publication(Entity):
         self.publication_type = \
             PublicationType.from_json(json_data['publication_type'])
 
-    @classmethod
-    def get_uri(cls, id, agent):
+    @staticmethod
+    def get_uri(id, agent):
         return '{}/publication/{}'.format(agent.host_name, id)

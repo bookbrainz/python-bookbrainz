@@ -21,6 +21,7 @@ from simple_objects import CreatorCredit, Language, EditionFormat, EditionStatus
 from pybb import default_agent
 from parallel_requests import RequestQueue
 
+
 class Edition(Entity):
     def __init__(self):
         super(self.__class__, self).__init__()
@@ -82,13 +83,13 @@ class Edition(Entity):
 
         request_queue = RequestQueue()
         for edition in editions_json:
-            cls.add_id_get_more(edition, request_queue, included, agent)
+            cls.add_id_get_more(edition, request_queue, included)
 
         request_queue.send_all()
         return editions_json
 
     @classmethod
-    def add_id_get_more(cls, edition_json, request_queue, included, agent):
+    def add_id_get_more(cls, edition_json, request_queue, included):
         if 'publisher' in included:
             edition_json['publisher'] = \
                 request_queue.get_request(cls.get_publisher_uri(edition_json))
@@ -97,15 +98,14 @@ class Edition(Entity):
             edition_json['publication'] = \
                 request_queue.get_request(cls.get_publication_uri(edition_json))
 
-    @classmethod
-    def get_publisher_uri(cls, entity_json):
+    @staticmethod
+    def get_publisher_uri(entity_json):
         return entity_json['publisher_uri']
 
-    @classmethod
-    def get_publication_uri(cls, entity_json):
+    @staticmethod
+    def get_publication_uri(entity_json):
         return entity_json['publication_uri']
 
-
-    @classmethod
-    def get_uri(cls, id, agent):
+    @staticmethod
+    def get_uri(id, agent):
         return '{}/edition/{}'.format(agent.host_name, id)

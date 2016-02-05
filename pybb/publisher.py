@@ -53,6 +53,6 @@ class Publisher(Entity):
     def end(self):
         return format_date(self.end_date, self.end_date_precision)
 
-    @classmethod
-    def get_uri(cls, id, agent):
+    @staticmethod
+    def get_uri(id, agent):
         return '{}/publisher/{}'.format(agent.host_name, id)

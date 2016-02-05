@@ -31,8 +31,8 @@ class Work(Entity):
         self.work_type = WorkType.from_json(json_data['work_type'])
         self.languages = languages_from_json(json_data['languages'])
 
-    @classmethod
-    def get_uri(cls, id, agent):
+    @staticmethod
+    def get_uri(id, agent):
         return '{}/work/{}'.format(agent.host_name, id)
 
 

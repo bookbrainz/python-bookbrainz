@@ -152,28 +152,28 @@ class Entity(Base):
 
         return entity_request
 
-    @classmethod
-    def get_uri(cls, id, agent):
+    @staticmethod
+    def get_uri(id, agent):
         return '{}/entity/{}'.format(agent.host_name, id)
 
-    @classmethod
-    def get_aliases_uri(cls, id, agent):
+    @staticmethod
+    def get_aliases_uri(id, agent):
         return '{}/entity/{}/aliases'.format(agent.host_name, id)
 
-    @classmethod
-    def get_relationships_uri(cls, id, agent):
+    @staticmethod
+    def get_relationships_uri(id, agent):
         return '{}/entity/{}/relationships'.format(agent.host_name, id)
 
-    @classmethod
-    def get_identifiers_uri(cls, id, agent):
+    @staticmethod
+    def get_identifiers_uri(id, agent):
         return '{}/entity/{}/identifiers'.format(agent.host_name, id)
 
-    @classmethod
-    def get_annotation_uri(cls, id, agent):
+    @staticmethod
+    def get_annotation_uri(id, agent):
         return '{}/entity/{}/annotation'.format(agent.host_name, id)
 
-    @classmethod
-    def get_disambiguation_uri(cls, id, agent):
+    @staticmethod
+    def get_disambiguation_uri(id, agent):
         return '{}/entity/{}/disambiguation'.format(agent.host_name, id)
 
 
