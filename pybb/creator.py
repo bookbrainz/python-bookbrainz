@@ -58,9 +58,5 @@ class Creator(Entity):
         return format_date(self.end_date, self.end_date_precision)
 
     @classmethod
-    def add_id_get(cls, id, request_queue, included, agent):
-        super(cls,cls).add_id_get(id, request_queue, included. agent)
-
-    @classmethod
     def get_uri(cls, id, agent):
         return '{}/creator/{}'.format(agent.host_name, id)
