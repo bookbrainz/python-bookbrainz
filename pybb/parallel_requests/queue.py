@@ -18,6 +18,8 @@
 import grequests
 import json
 
+
+# TODO handling of exceptions
 class RequestQueue(object):
     def __init__(self):
         self.requests = []
