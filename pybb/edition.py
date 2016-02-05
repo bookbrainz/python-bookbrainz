@@ -75,6 +75,7 @@ class Edition(Entity):
     def release(self):
         return format_date(self.release_date, self.release_date_precision)
 
+    @classmethod
     def get_multiple_ids_json(cls, ids, included=[], agent=default_agent):
         editions_json = \
             super(cls, cls).get_multiple_ids_json(ids, included, agent)
