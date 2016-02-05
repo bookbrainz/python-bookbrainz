@@ -98,6 +98,13 @@ class Entity(Base):
 
     @classmethod
     def get_multiple_ids(cls, ids, included=[], agent=default_agent):
+        responses_json = cls.get_multiple_ids(ids, included, agent)
+        entities = [cls.from_json(json_data) for json_data in responses_json]
+
+        return entities
+
+    @classmethod
+    def get_multiple_ids_json(cls, ids, included, agent=default_agent):
         request_queue = RequestQueue()
         responses_json = []
 
@@ -107,9 +114,7 @@ class Entity(Base):
             )
 
         request_queue.send_all()
-
-        entities = [cls.from_json(json_data) for json_data in responses_json]
-        return entities
+        return responses_json
 
     @classmethod
     def add_id_get(cls, id, request_queue, included, agent):
