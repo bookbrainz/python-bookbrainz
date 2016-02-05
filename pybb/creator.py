@@ -58,10 +58,6 @@ class Creator(Entity):
         return format_date(self.end_date, self.end_date_precision)
 
     @classmethod
-    def get_multiple_ids(cls, ids, included=[], agent=default_agent):
-        pass
-
-    @classmethod
     def add_id_get(cls, id, request_queue, included, agent):
         super(cls,cls).add_id_get(id, request_queue, included. agent)
 
