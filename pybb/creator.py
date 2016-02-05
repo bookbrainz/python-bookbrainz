@@ -19,7 +19,7 @@ from entity import Entity, format_date
 from entity_types import CreatorType
 from dateutil.parser import parse as parse_date
 from simple_objects import Gender
-
+from pybb import default_agent
 
 class Creator(Entity):
     def __init__(self):
@@ -56,3 +56,15 @@ class Creator(Entity):
 
     def end(self):
         return format_date(self.end_date, self.end_date_precision)
+
+    @classmethod
+    def get_multiple_ids(cls, ids, included=[], agent=default_agent):
+        pass
+
+    @classmethod
+    def add_id_get(cls, id, request_queue, included, agent):
+        super(cls,cls).add_id_get(id, request_queue, included. agent)
+
+    @classmethod
+    def get_uri(cls, id, agent):
+        return '{}/creator/{}'.format(agent.host_name, id)
