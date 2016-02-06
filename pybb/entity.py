@@ -109,7 +109,28 @@ class Entity(Base):
         return entities
 
     @classmethod
-    def get_multiple_ids_json(cls, ids, included, agent=default_agent):
+    def get_multiple_ids_derived(cls, ids, included, agent=default_agent):
+        """ Similar to get_multiple_ids but it returns
+        derived classes like Creator or Work (not Entity)
+
+        :param ids: bbids of entities
+        :param included:
+        :param agent:
+        :return: list of entities
+        """
+
+        classes = cls.get_entity_types_from_ids(ids, agent)
+        responses_json = cls.get_multiple_ids_json(ids, included, agent)
+        responses_json = [type_class.from_json(json_data)
+                    for type_class, json_data in zip(classes, responses_json)]
+
+        entities = [type_class.from_json(json_data)
+                    for type_class, json_data in zip(classes, responses_json)]
+
+        return entities
+
+    @classmethod
+    def get_multiple_ids_json(cls, ids, included, agent):
         request_queue = RequestQueue()
         responses_json = []
 
@@ -122,6 +143,27 @@ class Entity(Base):
 
         # Second round of requests (uses data from the first one)
         for response in responses_json:
+            response.update(
+                cls.add_id_get_more(response, request_queue, included)
+            )
+        request_queue.send_all()
+
+        return responses_json
+
+    @staticmethod
+    def get_multiple_ids_json_derived(classes, ids, included, agent):
+        request_queue = RequestQueue()
+        responses_json = []
+
+        # First round of requests
+        for cls, id in zip(classes, ids):
+            responses_json.append(
+                cls.add_id_get(id, request_queue, included, agent)
+            )
+        request_queue.send_all()
+
+        # Second round of requests (uses data from the first one)
+        for cls, response in zip(classes, responses_json):
             response.update(
                 cls.add_id_get_more(response, request_queue, included)
             )
@@ -182,6 +224,18 @@ class Entity(Base):
             )
 
         request_queue.send_all()
+
+    @classmethod
+    def get_entity_types_from_ids(cls, ids, agent):
+        """ Gets info about each entity:
+        type (like 'creator' or 'work')
+
+        :param ids: bbids of entities
+        :param agent: used agent
+        :return: list of classes
+        """
+        entities = Entity.get_multiple_ids(ids, [], agent)
+        return [entity.type for entity in entities]
 
     @staticmethod
     def get_uri(id, agent):
