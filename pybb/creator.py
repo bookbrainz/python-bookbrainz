@@ -23,7 +23,7 @@ from pybb import default_agent
 
 class Creator(Entity):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Creator, self).__init__()
         self.creator_type = None
 
         self.begin_date = None
@@ -37,7 +37,7 @@ class Creator(Entity):
         self.gender = None
 
     def fetch_from_json_filled(self, json_data):
-        super(self.__class__, self).fetch_from_json(json_data)
+        super(Creator, self).fetch_from_json_filled(json_data)
 
         self.begin_date = parse_date(json_data['begin_date']).date()
         self.begin_date_precision = json_data['begin_date_precision']

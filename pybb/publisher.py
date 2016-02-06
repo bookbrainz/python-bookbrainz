@@ -22,7 +22,7 @@ from entity_types import PublisherType
 
 class Publisher(Entity):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Publisher, self).__init__()
         self.publisher_type = None
 
         self.begin_date = None
@@ -34,7 +34,7 @@ class Publisher(Entity):
         self.ended = None
 
     def fetch_from_json_filled(self, json_data):
-        super(self.__class__, self).fetch_from_json(json_data)
+        super(Publisher, self).fetch_from_json_filled(json_data)
 
         self.begin_date = parse_date(json_data['begin_date']).date()
         self.begin_date_precision = json_data['begin_date_precision']

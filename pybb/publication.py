@@ -21,11 +21,11 @@ from entity_types import PublicationType
 
 class Publication(Entity):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Publication, self).__init__()
         self.publication_type = None
 
     def fetch_from_json_filled(self, json_data):
-        super(self.__class__, self).fetch_from_json(json_data)
+        super(Publication, self).fetch_from_json_filled(json_data)
 
         self.publication_type = \
             PublicationType.from_json(json_data['publication_type'])

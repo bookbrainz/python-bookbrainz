@@ -117,9 +117,8 @@ class Entity(Base):
         """
 
         classes = cls.get_entity_types_from_ids(ids, agent)
-        responses_json = cls.get_multiple_ids_json(ids, included, agent)
-        responses_json = [type_class.from_json(json_data)
-                    for type_class, json_data in zip(classes, responses_json)]
+        responses_json = \
+            cls.get_multiple_ids_json_derived(classes, ids, included, agent)
 
         entities = [type_class.from_json(json_data)
                     for type_class, json_data in zip(classes, responses_json)]

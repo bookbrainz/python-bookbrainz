@@ -25,7 +25,7 @@ from publication import Publication
 
 class Edition(Entity):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Edition, self).__init__()
 
         self.release_date = None
         self.release_date_precision = None

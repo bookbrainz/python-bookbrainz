@@ -22,12 +22,12 @@ from simple_objects import Language
 
 class Work(Entity):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Work, self).__init__()
         self.work_type = None
         self.languages = None
 
     def fetch_from_json_filled(self, json_data):
-        super(self.__class__, self).fetch_from_json(json_data)
+        super(Work, self).fetch_from_json_filled(json_data)
         self.work_type = WorkType.from_json(json_data['work_type'])
         self.languages = languages_from_json(json_data['languages'])
 
