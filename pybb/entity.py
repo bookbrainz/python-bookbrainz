@@ -23,7 +23,7 @@ from simple_objects import Alias, Identifier, Disambiguation, Annotation
 from relationship import Relationship
 from revision import EntityRevision
 from parallel_requests import RequestQueue
-from dateutil.parser import parse as parse_date
+from dateutil.parser import parse as _parse_date
 from pybb import default_agent
 
 
@@ -281,3 +281,9 @@ def format_date(date, precision):
     else:
         return '{:02}-{:02}-{:02}'.format(date.year, date.month, date.day)
 
+
+def parse_date(date):
+    if date:
+        return _parse_date(date).date()
+    else:
+        return None

@@ -15,8 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from entity import Entity, format_date
-from dateutil.parser import parse as parse_date
+from entity import Entity, format_date, parse_date
 from simple_objects import CreatorCredit, Language, EditionFormat, EditionStatus
 from pybb import default_agent
 from parallel_requests import RequestQueue
@@ -54,7 +53,7 @@ class Edition(Entity):
     def fetch_from_json_filled(self, json_data):
         super(Edition, self).fetch_from_json_filled(json_data)
 
-        self.release_date = parse_date(json_data['release_date']).date()
+        self.release_date = parse_date(json_data['release_date'])
         self.release_date_precision = json_data['release_date_precision']
 
         self.pages = json_data['pages']

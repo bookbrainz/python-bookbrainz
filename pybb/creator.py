@@ -15,11 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from entity import Entity, format_date
+from entity import Entity, format_date, parse_date
 from entity_types import CreatorType
-from dateutil.parser import parse as parse_date
 from simple_objects import Gender
-from pybb import default_agent
+
 
 class Creator(Entity):
     def __init__(self):
@@ -39,10 +38,10 @@ class Creator(Entity):
     def fetch_from_json_filled(self, json_data):
         super(Creator, self).fetch_from_json_filled(json_data)
 
-        self.begin_date = parse_date(json_data['begin_date']).date()
+        self.begin_date = parse_date(json_data['begin_date'])
         self.begin_date_precision = json_data['begin_date_precision']
 
-        self.end_date = parse_date(json_data['end_date']).date()
+        self.end_date = parse_date(json_data['end_date'])
         self.end_date_precision = json_data['end_date_precision']
 
         self.creator_type = \
