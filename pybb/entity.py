@@ -152,6 +152,20 @@ class Entity(Base):
 
         return entity_request
 
+    @classmethod
+    def delete_multiple_ids(cls, ids, revision_notes, agent=default_agent):
+        request_queue = RequestQueue()
+
+        for id, note in zip(ids, revision_notes):
+            request_queue.delete_request(
+                cls.get_uri(id, agent),
+                {'Authorization':'Bearer {}'.format(agent.oauth_acess_token),
+                 'Content-Type': 'application/json'},
+                {"revision":{"note": note}}
+            )
+
+        request_queue.send_all()
+
     @staticmethod
     def get_uri(id, agent):
         return '{}/entity/{}'.format(agent.host_name, id)
