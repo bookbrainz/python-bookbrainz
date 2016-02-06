@@ -41,7 +41,7 @@ class RequestQueue(object):
             grequests.delete(uri, headers=headers, params=params))
 
     def send_all(self):
-        responses = grequests.map([ob.append_request for ob in self.requests])
+        responses = grequests.map([ob.request for ob in self.requests])
         for index, response in enumerate(responses):
             content = json.loads(response.content)
             self.requests[index].result_dict.update(content)

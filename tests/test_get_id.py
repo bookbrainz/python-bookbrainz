@@ -22,7 +22,8 @@ from pybb.entity import Entity
 class TestGetID(TestCase):
     def test_get_entities_by_ids(self):
         entities = Entity.get_multiple_ids(
-            ['32f78c16-39d0-4595-afe0-974f89dd71ad'], included=set('aliases')
+            ['32f78c16-39d0-4595-afe0-974f89dd71ad'],
+            included=frozenset(['aliases'])
         )
         entity = entities[0]
         self.assertEquals(
