@@ -44,7 +44,8 @@ class RequestQueue(object):
         responses = grequests.map([ob.request for ob in self.requests])
         for index, response in enumerate(responses):
             content = json.loads(response.content)
-            self.requests[index].result_dict.update(content)
+            if content:
+                self.requests[index].result_dict.update(content)
         self.clear()
 
 
