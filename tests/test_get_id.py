@@ -27,7 +27,8 @@ class TestGetID(TestCase):
     def test_get_entities_by_ids(self):
         entities = Entity.get_multiple_ids(
             entity_ids[:1],
-            included=frozenset(['aliases'])
+            included=frozenset(['aliases', 'identifiers', 'relationships',
+                                'disambiguation', 'annotation'])
         )
         entity = entities[0]
         self.assertEquals(
@@ -38,8 +39,11 @@ class TestGetID(TestCase):
     def test_get_editions_by_ids(self):
         editions = Entity.get_multiple_ids_derived(
             edition_ids,
-            included=frozenset(['publisher'])
+            included=frozenset(
+                ['aliases', 'identifiers', 'relationships',
+                 'disambiguation', 'annotation', 'publisher', 'publication'])
         )
+
         self.assertEquals(
             editions[0].publisher.default_alias.name,
             'HarperCollins Publishers'
