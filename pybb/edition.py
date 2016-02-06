@@ -77,18 +77,6 @@ class Edition(Entity):
         return format_date(self.release_date, self.release_date_precision)
 
     @classmethod
-    def get_multiple_ids_json(cls, ids, included=[], agent=default_agent):
-        editions_json = \
-            super(cls, cls).get_multiple_ids_json(ids, included, agent)
-
-        request_queue = RequestQueue()
-        for edition in editions_json:
-            cls.add_id_get_more(edition, request_queue, included)
-
-        request_queue.send_all()
-        return editions_json
-
-    @classmethod
     def add_id_get_more(cls, edition_json, request_queue, included):
         if 'publisher' in included:
             edition_json['publisher'] = \

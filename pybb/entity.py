@@ -108,12 +108,20 @@ class Entity(Base):
         request_queue = RequestQueue()
         responses_json = []
 
+        # First round of requests
         for id in ids:
             responses_json.append(
                 cls.add_id_get(id, request_queue, included, agent)
             )
-
         request_queue.send_all()
+
+        # Second round of requests (uses data from the first one)
+        for response in responses_json:
+            response.update(
+                cls.add_id_get_more(response, request_queue, included)
+            )
+        request_queue.send_all()
+
         return responses_json
 
     @classmethod
@@ -151,6 +159,10 @@ class Entity(Base):
                 )
 
         return entity_request
+
+    @classmethod
+    def add_id_get_more(cls, entity_json, request_queue, included):
+        return {}
 
     @classmethod
     def delete_multiple_ids(cls, ids, revision_notes, agent=default_agent):
