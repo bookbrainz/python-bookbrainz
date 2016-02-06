@@ -99,7 +99,7 @@ class Entity(Base):
             self.disambiguation = None
 
     @classmethod
-    def get_multiple_ids(cls, ids, included=[], agent=default_agent):
+    def get_multiple_ids(cls, ids, included, agent=default_agent):
         responses_json = cls.get_multiple_ids_json(ids, included, agent)
         entities = [cls.from_json(json_data) for json_data in responses_json]
 
@@ -214,9 +214,9 @@ class Entity(Base):
         for id, note in zip(ids, revision_notes):
             request_queue.delete_request(
                 cls.get_uri(id, agent),
-                {'Authorization':'Bearer {}'.format(agent.oauth_acess_token),
+                {'Authorization': 'Bearer {}'.format(agent.oauth_acess_token),
                  'Content-Type': 'application/json'},
-                {"revision":{"note": note}}
+                {"revision": {"note": note}}
             )
 
         request_queue.send_all()

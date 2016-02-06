@@ -22,6 +22,7 @@ from parallel_requests import RequestQueue
 from publisher import Publisher
 from publication import Publication
 
+
 class Edition(Entity):
     def __init__(self):
         super(Edition, self).__init__()

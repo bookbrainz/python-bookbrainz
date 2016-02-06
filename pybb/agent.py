@@ -19,3 +19,5 @@
 class Agent(object):
     def __init__(self):
         self.host_name = 'https://bookbrainz.org/ws'
+
+default_agent = Agent()
