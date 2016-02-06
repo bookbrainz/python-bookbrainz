@@ -78,13 +78,16 @@ class Edition(Entity):
 
     @classmethod
     def add_id_get_more(cls, edition_json, request_queue, included):
+        edition_new_data = {}
         if 'publisher' in included:
-            edition_json['publisher'] = \
+            edition_new_data['publisher'] = \
                 request_queue.get_request(cls.get_publisher_uri(edition_json))
 
         if 'publication' in included:
-            edition_json['publication'] = \
+            edition_new_data['publication'] = \
                 request_queue.get_request(cls.get_publication_uri(edition_json))
+
+        return edition_new_data
 
     @staticmethod
     def get_publisher_uri(entity_json):
