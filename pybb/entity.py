@@ -18,13 +18,14 @@
 """This module specifies a class, Resource, which is designed to be used as the
 base class for all resource models specified in this package."""
 
+from dateutil.parser import parse as _parse_date
+
 from base import Base
-from simple_objects import Alias, Identifier, Disambiguation, Annotation
+from parallel_requests import RequestQueue
+from pybb import default_agent
 from relationship import Relationship
 from revision import EntityRevision
-from parallel_requests import RequestQueue
-from dateutil.parser import parse as _parse_date
-from pybb import default_agent
+from simple_objects import Alias, Identifier, Disambiguation, Annotation
 
 
 class Entity(Base):

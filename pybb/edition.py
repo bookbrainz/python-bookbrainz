@@ -16,11 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from entity import Entity, format_date, parse_date
-from simple_objects import CreatorCredit, Language, EditionFormat, EditionStatus
-from pybb import default_agent
-from parallel_requests import RequestQueue
-from publisher import Publisher
 from publication import Publication
+from publisher import Publisher
+from simple_objects import CreatorCredit, Language, EditionFormat, EditionStatus
 
 
 class Edition(Entity):
