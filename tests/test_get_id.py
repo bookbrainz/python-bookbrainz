@@ -18,14 +18,15 @@
 from unittest import TestCase
 from pybb.entity import Entity
 
-edition_ids = ['32f78c16-39d0-4595-afe0-974f89dd71ad']
+edition_ids = ['32f78c16-39d0-4595-afe0-974f89dd71ad',
+               'fb6d3b59-d52a-4e00-a38c-1ed8bc27509e']
 entity_ids = edition_ids
 
 
 class TestGetID(TestCase):
     def test_get_entities_by_ids(self):
         entities = Entity.get_multiple_ids(
-            entity_ids,
+            entity_ids[:1],
             included=frozenset(['aliases'])
         )
         entity = entities[0]
@@ -39,8 +40,12 @@ class TestGetID(TestCase):
             edition_ids,
             included=frozenset(['publisher'])
         )
-        edition = editions[0]
         self.assertEquals(
-            edition.publisher.default_alias.name,
+            editions[0].publisher.default_alias.name,
             'HarperCollins Publishers'
         )
+        self.assertEquals(
+            editions[1].edition_status.label,
+            'Official'
+        )
+
