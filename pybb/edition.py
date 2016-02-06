@@ -20,7 +20,8 @@ from dateutil.parser import parse as parse_date
 from simple_objects import CreatorCredit, Language, EditionFormat, EditionStatus
 from pybb import default_agent
 from parallel_requests import RequestQueue
-
+from publisher import Publisher
+from publication import Publication
 
 class Edition(Entity):
     def __init__(self):
@@ -43,6 +44,9 @@ class Edition(Entity):
         self.language = None
         self.edition_format = None
         self.edition_status = None
+
+        self.publisher = None
+        self.publication = None
 
         self.publisher_uri = None
         self.publication_uri = None
@@ -69,6 +73,13 @@ class Edition(Entity):
             EditionFormat.from_json(json_data['edition_format'])
         self.edition_status = \
             EditionStatus.from_json(json_data['edition_status'])
+
+        if 'publisher' in json_data:
+            self.publisher = \
+                Publisher.from_json(json_data['publisher'])
+        if 'publication' in json_data:
+            self.publication = \
+                Publication.from_json(json_data['publication'])
 
         self.publisher_uri = json_data['publisher_uri']
         self.publication_uri = json_data['publication_uri']
