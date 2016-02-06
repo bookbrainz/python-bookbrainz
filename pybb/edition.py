@@ -52,7 +52,7 @@ class Edition(Entity):
         self.publication_uri = None
 
     def fetch_from_json_filled(self, json_data):
-        super(self.__class__, self).fetch_from_json(json_data)
+        super(Edition, self).fetch_from_json_filled(json_data)
 
         self.release_date = parse_date(json_data['release_date']).date()
         self.release_date_precision = json_data['release_date_precision']
