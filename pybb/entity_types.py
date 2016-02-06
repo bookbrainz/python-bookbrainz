@@ -20,7 +20,7 @@ from base import Base
 
 class WorkType(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(WorkType, self).__init__()
         self.work_type_id = None
         self.label = None
 
@@ -31,7 +31,7 @@ class WorkType(Base):
 
 class PublicationType(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(PublicationType, self).__init__()
         self.publication_type_id = None
         self.label = None
 
@@ -42,7 +42,7 @@ class PublicationType(Base):
 
 class CreatorType(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(CreatorType, self).__init__()
         self.creator_type_id = None
         self.label = None
 
@@ -53,7 +53,7 @@ class CreatorType(Base):
 
 class PublisherType(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(PublisherType, self).__init__()
         self.publisher_type_id = None
         self.label = None
 

@@ -20,7 +20,7 @@ from base import Base
 
 class Annotation(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Annotation, self).__init__()
 
         self.annotation_id = None
         self.content = None
@@ -34,7 +34,7 @@ class Annotation(Base):
 
 class Disambiguation(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Disambiguation, self).__init__()
 
         self.disambiguation_id = None
         self.comment = None
@@ -46,7 +46,7 @@ class Disambiguation(Base):
 
 class Alias(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Alias, self).__init__()
 
         self.alias_id = None
         self.name = None
@@ -66,7 +66,7 @@ class Alias(Base):
 
 class Identifier(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Identifier, self).__init__()
 
         self.identifier_id = None
         self.identifier_type = None
@@ -82,7 +82,7 @@ class Identifier(Base):
 
 class IdentifierType(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(IdentifierType, self).__init__()
 
         self.identifier_type_id = None
         self.label = None
@@ -94,7 +94,7 @@ class IdentifierType(Base):
 
 class Gender(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Gender, self).__init__()
 
         self.gender_id = None
         self.name = None
@@ -106,7 +106,7 @@ class Gender(Base):
 
 class Language(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Language, self).__init__()
 
     language_id = None
     name = None
@@ -118,7 +118,7 @@ class Language(Base):
 
 class EditionFormat(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(EditionFormat, self).__init__()
 
         self.edition_format_id = None
         self.label = None
@@ -130,7 +130,7 @@ class EditionFormat(Base):
 
 class EditionStatus(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(EditionStatus, self).__init__()
 
         self.edition_status_id = None
         self.label = None
@@ -142,7 +142,7 @@ class EditionStatus(Base):
 
 class CreatorCredit(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(CreatorCredit, self).__init__()
         self.begin_phrase = None
         self.creator_credit_id = None
         self.names = None

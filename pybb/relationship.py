@@ -21,7 +21,7 @@ from dateutil.parser import parse as parse_date
 
 class Relationship(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(Relationship, self).__init__()
 
         self.entities = None
         self.last_updated = None
@@ -44,7 +44,7 @@ class Relationship(Base):
 
 class RelationshipType(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(RelationshipType, self).__init__()
 
         self.relationship_type_id = None
         self.label = None
@@ -66,7 +66,7 @@ class RelationshipType(Base):
 
 class RelationshipEntity(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(RelationshipEntity, self).__init__()
         self.type = None
         self.entity_gid = None
         self.uri = None
@@ -81,7 +81,7 @@ class RelationshipEntity(Base):
 
 class RelationshipText(Base):
     def __init__(self):
-        super(self.__class__, self).__init__()
+        super(RelationshipText, self).__init__()
         self.position = None
         self.text = None
 
