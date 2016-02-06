@@ -22,7 +22,7 @@ class Base(object):
             setattr(self, key, value)
 
     def fetch_from_json(self, json_data):
-        if json_data is None:
+        if not json_data:
             self.__init__()
         else:
             self.fetch_from_json_filled(json_data)
