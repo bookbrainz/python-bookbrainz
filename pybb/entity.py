@@ -68,11 +68,13 @@ class Entity(Base):
 
         self.default_alias = Alias.from_json(json_data['default_alias'])
 
+        """
         self.aliases_uri = json_data['aliases_uri']
         self.relationships_uri = json_data['relationships_uri']
         self.identifiers_uri = json_data['identifiers_uri']
         self.disambiguation_uri = json_data['disambiguation_uri']
         self.annotation_uri = json_data['annotation_uri']
+        """
 
         if 'aliases' in json_data:
             self.aliases = aliases_from_json(json_data['aliases'])
