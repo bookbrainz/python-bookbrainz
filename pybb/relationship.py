@@ -92,7 +92,7 @@ class RelationshipText(Base):
 
 def relationship_entities_from_json(json_data):
     return [RelationshipEntity.from_json(entity)
-            for entity in json_data['entities']]
+            for entity in json_data]
 
 
 def relationship_texts_from_json(json_data):

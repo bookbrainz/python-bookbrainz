@@ -76,7 +76,8 @@ class Identifier(Base):
         self.identifier_id = json_data['identifier_id']
         self.value = json_data['value']
 
-        self.identifier_type = IdentifierType.from_json(json_data)
+        self.identifier_type = \
+            IdentifierType.from_json(json_data['identifier_type'])
 
 
 class IdentifierType(Base):
