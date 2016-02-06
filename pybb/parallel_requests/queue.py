@@ -27,17 +27,21 @@ class RequestQueue(object):
     def clear(self):
         del self.requests[:]
 
-    def request(self, request):
+    def append_request(self, request):
         result_dict = {}
         request_object = RequestObject(request, result_dict)
         self.requests.append(request_object)
         return result_dict
 
     def get_request(self, uri):
-        return self.request(grequests.get(uri))
+        return self.append_request(grequests.get(uri))
+
+    def delete_request(self, uri, headers, params):
+        return self.append_request(
+            grequests.delete(uri, headers=headers, params=params))
 
     def send_all(self):
-        responses = grequests.map([ob.request for ob in self.requests])
+        responses = grequests.map([ob.append_request for ob in self.requests])
         for index, response in enumerate(responses):
             content = json.loads(response.content)
             self.requests[index].result_dict.update(content)
