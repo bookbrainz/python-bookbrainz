@@ -24,6 +24,11 @@ from relationship import Relationship
 from revision import EntityRevision
 from parallel_requests import RequestQueue
 from dateutil.parser import parse as parse_date
+from creator import Creator
+from edition import Edition
+from work import Work
+from publisher import Publisher
+from publication import Publication
 from pybb import default_agent
 
 
@@ -57,7 +62,7 @@ class Entity(Base):
     def fetch_from_json_filled(self, json_data):
         self.entity_gid = json_data['entity_gid']
         self.uri = json_data['uri']
-        self.type = json_data['_type']
+        self.type = Entity.type_to_class(json_data['_type'])
         self.revision = EntityRevision.from_json(json_data['revision'])
         self.last_updated = parse_date(json_data['last_updated'])
 
@@ -202,6 +207,16 @@ class Entity(Base):
     def get_disambiguation_uri(id, agent):
         return '{}/entity/{}/disambiguation'.format(agent.host_name, id)
 
+    @staticmethod
+    def type_to_class(type_name):
+        return {
+            "Creator": Creator,
+            "Work": Work,
+            "Edition": Edition,
+            "Publisher": Publisher,
+            "Publication": Publication
+        }[type_name]
+
 
 def aliases_from_json(json_data):
     return [Alias.from_json(alias) for alias in json_data['objects']]
@@ -225,3 +240,4 @@ def format_date(date, precision):
         return '{:02}-{:02}'.format(date.year, date.month)
     else:
         return '{:02}-{:02}-{:02}'.format(date.year, date.month, date.day)
+
