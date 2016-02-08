@@ -61,3 +61,12 @@ class Base(object):
         instance = cls()
         instance.fetch_from_json(json_data)
         return instance
+
+    def to_json(self):
+        if self:
+            return self.to_json_filled()
+        else:
+            return None
+
+    def to_json_filled(self):
+        raise NotImplementedError
