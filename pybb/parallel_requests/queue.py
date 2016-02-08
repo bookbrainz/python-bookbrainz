@@ -15,6 +15,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+""" This module includes utilities for making parallel requests
+ using grequests. There is a request queue implemented,
+ which allows among others to:
+    -> add request to the queue (append_request),
+    -> add GET request to the queue (get_request)
+    -> add DELETE request to the queue (delete_request)
+    -> send all requests
+"""
+
 import json
 import grequests
 
@@ -28,19 +37,44 @@ class RequestQueue(object):
         del self.requests[:]
 
     def append_request(self, request):
+        """ Adds a grequests request to the queue
+
+        Returns a dict with JSON data but it gets filled after calling send_all.
+
+        :param request: request to add
+        :return: JSON data from response in form of dict
+        """
         result_dict = {}
         request_object = RequestObject(request, result_dict)
         self.requests.append(request_object)
         return result_dict
 
     def get_request(self, uri):
+        """ Adds a GET request to the queue
+
+        :param uri: request uri
+        :return: JSON data from response in form of dict
+        """
         return self.append_request(grequests.get(uri))
 
     def delete_request(self, uri, headers, params):
+        """ Adds a DELETE request to the queue
+
+        :param uri: request uri
+        :param headers: request headers
+        :param params: request JSON data (in form of dict)
+        :return: JSON data from response in form of dict
+        """
         return self.append_request(
             grequests.delete(uri, headers=headers, params=params))
 
     def send_all(self):
+        """ Sends all requests from queue and clears it after.
+
+        Fills data returned in requests requested before.
+
+        :return: None
+        """
         responses = grequests.map([ob.request for ob in self.requests])
         for index, response in enumerate(responses):
             content = json.loads(response.content)

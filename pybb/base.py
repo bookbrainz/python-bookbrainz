@@ -17,21 +17,47 @@
 
 
 class Base(object):
-    def __init__(self, **kwargs):
-        for key, value in kwargs.items():
-            setattr(self, key, value)
+    """base class for all other bookbrainz db classes
+
+    Role of fetch_from_json is to parse data from JSON to the object on
+    which it is called. If data is None or empty then default constructor
+    without any parameters is called. If it is not, then fetch_from_json_filled
+    is called, which assumes that its data is not empty.
+
+    This class has no attributes and args in constructor.
+    """
+    def __init__(self):
+        pass
 
     def fetch_from_json(self, json_data):
+        """ Parses json_data to called object
+
+        :param json_data: JSON formatted data
+        :return: None
+        """
         if not json_data:
             self.__init__()
         else:
             self.fetch_from_json_filled(json_data)
 
     def fetch_from_json_filled(self, json_data):
+        """ Parses json_data to called object assuming that
+        json_data is not empty
+
+        Should ve overridden in called object's class
+
+        :param json_data: JSON formatted data
+        :return: None
+        """
         raise NotImplementedError
 
     @classmethod
     def from_json(cls, json_data):
+        """ Returns object of called class with parsed json_data
+
+        :param json_data: JSON formatted data
+        :return: instance of cls
+        """
         instance = cls()
         instance.fetch_from_json(json_data)
         return instance
