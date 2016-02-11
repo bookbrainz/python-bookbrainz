@@ -15,79 +15,49 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dateutil.parser import parse as parse_date
-from base import Base
+from base import Base, Attribute
+from dateutil.parser import parse as parse_datetime
 
 
 class Relationship(Base):
+    relationship_id = Attribute('relationship_id')
+    last_updated = Attribute('last_updated', parse=parse_datetime)
+    relationship_type = Attribute('relationship_type', cls=RelationshipType)
+    uri = Attribute('uri')
+
+    entities = Attribute('entities', parse=relationship_entities_from_json)
+    texts = Attribute('texts', parse=relationship_texts_from_json)
+
     def __init__(self):
         super(Relationship, self).__init__()
 
-        self.entities = None
-        self.last_updated = None
-        self.relationship_id = None
-        self.relationship_type = None
-        self.texts = None
-        self.uri = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.last_updated = parse_date(json_data['last_updated'])
-        self.relationship_id = json_data['relationship_id']
-        self.uri = json_data['uri']
-
-        self.entities = relationship_entities_from_json(json_data['entities'])
-        self.texts = relationship_texts_from_json(json_data['texts'])
-
-        self.relationship_type = \
-            RelationshipType.from_json(json_data['relationship_type'])
-
 
 class RelationshipType(Base):
+    relationship_type_id = Attribute('relationship_type_id')
+    label = Attribute('label')
+    deprecated = Attribute('deprecated')
+    description = Attribute('description')
+    template = Attribute('template')
+    child_order = Attribute('child_order')
+    parent = Attribute('parent')
+
     def __init__(self):
         super(RelationshipType, self).__init__()
 
-        self.relationship_type_id = None
-        self.label = None
-        self.deprecated = None
-        self.description = None
-        self.template = None
-        self.child_order = None
-        self.parent = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.relationship_type_id = json_data['relationship_type_id']
-        self.label = json_data['label']
-        self.deprecated = json_data['deprecated']
-        self.description = json_data['description']
-        self.template = json_data['template']
-        self.child_order = json_data['child_order']
-        self.parent = json_data['parent']
-
 
 class RelationshipEntity(Base):
-    def __init__(self):
-        super(RelationshipEntity, self).__init__()
-        self.type = None
-        self.entity_gid = None
-        self.uri = None
-        self.position = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.type = json_data['entity']['_type']
-        self.entity_gid = json_data['entity']['entity_gid']
-        self.uri = json_data['entity']['uri']
-        self.position = json_data['position']
+    type = Attribute('type', ws_name=('entity', '_type'))
+    entity_gid = Attribute('entity_gid', ws_name=('entity', 'entity_gid'))
+    uri = Attribute('uri', ws_name=('entity', 'uri'))
+    position = Attribute('position')
 
 
 class RelationshipText(Base):
+    position = Attribute('position')
+    text = Attribute('text')
+
     def __init__(self):
         super(RelationshipText, self).__init__()
-        self.position = None
-        self.text = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.position = json_data['position']
-        self.text = json_data['text']
 
 
 def relationship_entities_from_json(json_data):
