@@ -28,7 +28,8 @@ class Base(object):
     """
 
     def __init__(self):
-        pass
+        for attr in self.get_attributes():
+            setattr(self, attr.attr_name, None)
 
     def fetch_from_json(self, json_data):
         """ Parses json_data to called object
@@ -50,9 +51,8 @@ class Base(object):
         :param json_data: JSON formatted data
         :return: None
         """
-        for attr in dir(self):
-            if isinstance(attr, Attribute):
-                attr.set_from_json(self, json_data)
+        for attr in self.get_attributes():
+            attr.set_from_json(self, json_data)
 
 
     @classmethod
@@ -66,22 +66,16 @@ class Base(object):
         instance.fetch_from_json(json_data)
         return instance
 
-    def to_json(self):
-        if self:
-            return self.to_json_filled()
-        else:
-            return None
-
-    def to_json_filled(self):
-        raise NotImplementedError
-
+    def get_attributes(self):
+        candidates = (getattr(self, attr) for attr in dir(self.__class__))
+        return (value for value in candidates if isinstance(value, Attribute))
 
 class Attribute(object):
     """Attribute class
     """
-    def __init__(self, attr_name, name='', nullable=True, parse=None, cls=None):
-        self.attr_name = attr_name
-        self.ws_name = name if name else attr_name
+    def __init__(self, name, ws_name='', nullable=False, parse=None, cls=None):
+        self.attr_name = name
+        self.ws_name = ws_name if ws_name else name
         self.nullable = nullable
         self.parse = parse
         self.cls = cls
@@ -101,5 +95,6 @@ class Attribute(object):
             value = self.cls.from_json(value)
 
         setattr(instance, self.attr_name, value)
+
 
 
