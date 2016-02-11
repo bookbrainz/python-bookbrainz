@@ -26,6 +26,7 @@ class Base(object):
 
     This class has no attributes and args in constructor.
     """
+
     def __init__(self):
         pass
 
@@ -49,7 +50,10 @@ class Base(object):
         :param json_data: JSON formatted data
         :return: None
         """
-        raise NotImplementedError
+        for attr in dir(self):
+            if isinstance(attr, Attribute):
+                attr.set_from_json(self, json_data)
+
 
     @classmethod
     def from_json(cls, json_data):
@@ -70,3 +74,32 @@ class Base(object):
 
     def to_json_filled(self):
         raise NotImplementedError
+
+
+class Attribute(object):
+    """Attribute class
+    """
+    def __init__(self, attr_name, name='', nullable=True, parse=None, cls=None):
+        self.attr_name = attr_name
+        self.ws_name = name if name else attr_name
+        self.nullable = nullable
+        self.parse = parse
+        self.cls = cls
+
+    def set_from_json(self, instance, json_data):
+        if not json_data.get(self.ws_name):
+            if self.nullable:
+                return None
+            else:
+                raise ValueError('Attribute is not nullable')
+
+        value = json_data[self.ws_name]
+        if self.parse:
+            value = self.parse(value)
+
+        if self.cls:
+            value = self.cls.from_json(value)
+
+        setattr(instance, self.attr_name, value)
+
+
