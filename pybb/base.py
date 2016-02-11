@@ -81,13 +81,8 @@ class Attribute(object):
         self.cls = cls
 
     def set_from_json(self, instance, json_data):
-        if not json_data.get(self.ws_name):
-            if self.nullable:
-                return None
-            else:
-                raise ValueError('Attribute is not nullable')
+        value = self.get_value_from_name(json_data, self.ws_name)
 
-        value = json_data[self.ws_name]
         if self.parse:
             value = self.parse(value)
 
@@ -96,5 +91,15 @@ class Attribute(object):
 
         setattr(instance, self.attr_name, value)
 
+    def get_value_from_name(self, json_data, ws_name):
+        if type(ws_name) is tuple:
+            value = json_data
+            for name in ws_name:
+                if not self.nullable and not json_data.get(name):
+                    raise ValueError('Attribute isn\'t nullable')
 
+                value = value[name]
+        else:
+            value = json_data[ws_name]
 
+        return value
