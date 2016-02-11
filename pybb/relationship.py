@@ -51,6 +51,9 @@ class RelationshipEntity(Base):
     uri = Attribute('uri', ws_name=('entity', 'uri'))
     position = Attribute('position')
 
+    def __init__(self):
+        super(RelationshipEntity, self).__init__()
+
 
 class RelationshipText(Base):
     position = Attribute('position')
