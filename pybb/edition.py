@@ -43,7 +43,7 @@ class Edition(Entity):
     language = Attribute('language', cls=Language)
 
     edition_format = Attribute('edition_format', cls=EditionFormat)
-    edition_status = Attribute('edition_status')
+    edition_status = Attribute('edition_status', cls=EditionStatus)
 
     publisher = Attribute('publisher', cls=Publisher)
     publisher_uri = Attribute('publisher_uri')

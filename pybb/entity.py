@@ -50,6 +50,8 @@ class Entity(Base):
 
     aliases = Attribute('aliases', parse=aliases_from_json)
     aliases_uri = Attribute('aliases_uri')
+    default_alias = Attribute('default_alias', cls=Alias)
+    display_alias = Attribute('display_alias', cls=Alias)
 
     annotation = Attribute('annotation', cls=Annotation)
     annotation_uri = Attribute('annotation_uri')

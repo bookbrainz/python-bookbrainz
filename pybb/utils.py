@@ -5,7 +5,7 @@ type_to_class = {}
 
 
 def entity_type_name_to_class(type_name):
-    return type_to_class[type_name]
+    return type_to_class[type_name.lower()]
 
 
 def format_date(date, precision):

@@ -67,8 +67,9 @@ class Base(object):
         return instance
 
     def get_attributes(self):
-        candidates = (getattr(self, attr) for attr in dir(self.__class__))
-        return (value for value in candidates if isinstance(value, Attribute))
+        cls = self.__class__
+        candidates = [getattr(cls, attr) for attr in dir(cls)]
+        return [value for value in candidates if isinstance(value, Attribute)]
 
 
 class Attribute(object):
@@ -83,10 +84,10 @@ class Attribute(object):
     def set_from_json(self, instance, json_data):
         value = Attribute.get_value_by_ws_name(json_data, self.ws_name)
 
-        if self.parse:
+        if value and self.parse:
             value = self.parse(value)
 
-        if self.cls:
+        if value and self.cls:
             value = self.cls.from_json(value)
 
         setattr(instance, self.attr_name, value)
@@ -98,6 +99,6 @@ class Attribute(object):
             for name in ws_name:
                 value = value[name]
         else:
-            value = json_data[ws_name]
+            value = json_data.get(ws_name)
 
         return value
