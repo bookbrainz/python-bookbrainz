@@ -22,7 +22,8 @@ from dateutil.parser import parse as parse_datetime
 
 from base import Base, Attribute
 from parallel_requests import RequestQueue
-from pybb import default_agent, entity_type_name_to_class
+from pybb import default_agent
+from utils import entity_type_name_to_class
 from relationship import Relationship
 from revision import EntityRevision
 from simple_objects import Alias, Identifier, Disambiguation, Annotation

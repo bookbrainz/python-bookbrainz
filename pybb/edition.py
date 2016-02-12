@@ -20,7 +20,7 @@ from entity import Entity, format_date, parse_date
 from publication import Publication
 from publisher import Publisher
 from simple_objects import CreatorCredit, Language, EditionFormat, EditionStatus
-
+import utils
 
 class Edition(Entity):
     release_date = Attribute('release_date', parse=parse_date)
@@ -80,3 +80,5 @@ class Edition(Entity):
     @staticmethod
     def get_uri(id, agent):
         return '{}/edition/{}'.format(agent.host_name, id)
+
+utils.type_to_class['edition'] = Edition

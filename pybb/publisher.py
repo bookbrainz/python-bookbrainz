@@ -18,6 +18,7 @@
 from entity import Entity, format_date, parse_date
 from entity_types import PublisherType
 from base import Attribute
+import utils
 
 
 class Publisher(Entity):
@@ -43,3 +44,5 @@ class Publisher(Entity):
     @staticmethod
     def get_uri(id, agent):
         return '{}/publisher/{}'.format(agent.host_name, id)
+
+utils.type_to_class['publisher'] = Publisher

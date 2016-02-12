@@ -19,6 +19,7 @@ from base import Attribute
 from entity import Entity, format_date, parse_date
 from entity_types import CreatorType
 from simple_objects import Gender
+import utils
 
 
 class Creator(Entity):
@@ -46,3 +47,5 @@ class Creator(Entity):
     @staticmethod
     def get_uri(id, agent):
         return '{}/creator/{}'.format(agent.host_name, id)
+
+utils.type_to_class['creator'] = Creator

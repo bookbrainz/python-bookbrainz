@@ -18,6 +18,7 @@
 from base import Attribute
 from entity import Entity
 from entity_types import PublicationType
+import utils
 
 
 class Publication(Entity):
@@ -29,3 +30,5 @@ class Publication(Entity):
     @staticmethod
     def get_uri(id, agent):
         return '{}/publication/{}'.format(agent.host_name, id)
+
+utils.type_to_class['publication'] = Publication

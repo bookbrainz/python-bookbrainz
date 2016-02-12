@@ -19,6 +19,7 @@ from base import Attribute
 from entity import Entity
 from entity_types import WorkType
 from simple_objects import Language
+import utils
 
 
 class Work(Entity):
@@ -32,5 +33,8 @@ class Work(Entity):
     def get_uri(id, agent):
         return '{}/work/{}'.format(agent.host_name, id)
 
+
 def languages_from_json(json_data):
     return [Language.from_json(lang) for lang in json_data]
+
+utils.type_to_class['work'] = Work

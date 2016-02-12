@@ -12,13 +12,3 @@ from revision import EntityRevision
 from simple_objects import Identifier, IdentifierType, Alias, Annotation,\
     Disambiguation, Language, EditionStatus, EditionFormat, Gender
 from work import Work
-
-
-def entity_type_name_to_class(type_name):
-    return {
-        "Creator": Creator,
-        "Work": Work,
-        "Edition": Edition,
-        "Publisher": Publisher,
-        "Publication": Publication
-    }[type_name]
