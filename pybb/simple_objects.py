@@ -40,8 +40,8 @@ class Alias(Base):
     alias_id = Attribute('alias_id')
     name = Attribute('name')
     sort_name = Attribute('sort_name')
-    primary = Attribute('primary', nullable=True)
-    language = Attribute('language', cls=Language, nullable=True)
+    primary = Attribute('primary')
+    language = Attribute('language', cls=Language)
 
     def __init__(self):
         super(Alias, self).__init__()
@@ -97,9 +97,9 @@ class EditionStatus(Base):
 
 
 class CreatorCredit(Base):
-    begin_phrase = Attribute('begin_phrase', nullable=True)
+    begin_phrase = Attribute('begin_phrase')
     creator_credit_id = Attribute('creator_credit_id')
-    names = Attribute('names', nullable=True) # TODO implement it
+    names = Attribute('names') # TODO implement it
 
 
 # TODO implement it

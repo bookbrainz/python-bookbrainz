@@ -22,8 +22,8 @@ from user import User
 class EntityRevision(Base):
     revision_id = Attribute('revision_id')
     created_at = Attribute('created_at')
-    parent_id = Attribute('parent_id', nullable=True)
-    note = Attribute('note', nullable=True)
+    parent_id = Attribute('parent_id')
+    note = Attribute('note')
     user = Attribute('user', cls=User)
     uri = Attribute('uri')
     entity_uri = Attribute('entity_uri')
