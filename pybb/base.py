@@ -31,30 +31,6 @@ class Base(object):
         for attr in self.get_attributes():
             setattr(self, attr.attr_name, None)
 
-    def fetch_from_json(self, json_data):
-        """ Parses json_data to called object
-
-        :param json_data: JSON formatted data
-        :return: None
-        """
-        if not json_data:
-            self.__init__()
-        else:
-            self.fetch_from_json_filled(json_data)
-
-    def fetch_from_json_filled(self, json_data):
-        """ Parses json_data to called object assuming that
-        json_data is not empty
-
-        Should ve overridden in called object's class
-
-        :param json_data: JSON formatted data
-        :return: None
-        """
-        for attr in self.get_attributes():
-            attr.set_from_json(self, json_data)
-
-
     @classmethod
     def from_json(cls, json_data):
         """ Returns object of called class with parsed json_data
@@ -63,7 +39,11 @@ class Base(object):
         :return: instance of cls
         """
         instance = cls()
-        instance.fetch_from_json(json_data)
+
+        if json_data is not None:
+            for attr in instance.get_attributes():
+                attr.set_from_json(instance, json_data)
+
         return instance
 
     def get_attributes(self):
