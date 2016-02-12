@@ -19,19 +19,6 @@ from base import Base, Attribute
 from dateutil.parser import parse as parse_datetime
 
 
-class Relationship(Base):
-    relationship_id = Attribute('relationship_id')
-    last_updated = Attribute('last_updated', parse=parse_datetime)
-    relationship_type = Attribute('relationship_type', cls=RelationshipType)
-    uri = Attribute('uri')
-
-    entities = Attribute('entities', parse=relationship_entities_from_json)
-    texts = Attribute('texts', parse=relationship_texts_from_json)
-
-    def __init__(self):
-        super(Relationship, self).__init__()
-
-
 class RelationshipType(Base):
     relationship_type_id = Attribute('relationship_type_id')
     label = Attribute('label')
@@ -43,6 +30,19 @@ class RelationshipType(Base):
 
     def __init__(self):
         super(RelationshipType, self).__init__()
+
+
+class Relationship(Base):
+    relationship_id = Attribute('relationship_id')
+    last_updated = Attribute('last_updated', parse=parse_datetime)
+    relationship_type = Attribute('relationship_type', cls=RelationshipType)
+    uri = Attribute('uri')
+
+    entities = Attribute('entities', parse=relationship_entities_from_json)
+    texts = Attribute('texts', parse=relationship_texts_from_json)
+
+    def __init__(self):
+        super(Relationship, self).__init__()
 
 
 class RelationshipEntity(Base):
