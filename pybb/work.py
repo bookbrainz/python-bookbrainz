@@ -15,21 +15,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from entity import Entity
+from entity import Entity, Attribute
 from entity_types import WorkType
 from simple_objects import Language
 
 
 class Work(Entity):
+    work_type = Attribute('work_type', cls=WorkType)
+    languages = Attribute('languages', parse=languages_from_json)
+
     def __init__(self):
         super(Work, self).__init__()
-        self.work_type = None
-        self.languages = None
-
-    def fetch_from_json_filled(self, json_data):
-        super(Work, self).fetch_from_json_filled(json_data)
-        self.work_type = WorkType.from_json(json_data['work_type'])
-        self.languages = languages_from_json(json_data['languages'])
 
     @staticmethod
     def get_uri(id, agent):
