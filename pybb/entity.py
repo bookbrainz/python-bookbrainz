@@ -41,18 +41,6 @@ def relationships_from_json(json_data):
     return [Relationship.from_json(rel) for rel in json_data['objects']]
 
 
-def format_date(date, precision):
-    if date is None:
-        return None
-
-    if precision == 'YEAR':
-        return '{:02}'.format(date.year)
-    elif precision == 'MONTH':
-        return '{:02}-{:02}'.format(date.year, date.month)
-    else:
-        return '{:02}-{:02}-{:02}'.format(date.year, date.month, date.day)
-
-
 class Entity(Base):
     entity_gid = Attribute('entity_gid')
     uri = Attribute('uri')
@@ -241,8 +229,3 @@ class Entity(Base):
         return '{}/entity/{}/disambiguation'.format(agent.host_name, id)
 
 
-def parse_date(date):
-    if date:
-        return parse_datetime(date).date()
-    else:
-        return None

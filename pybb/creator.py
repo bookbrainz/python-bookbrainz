@@ -16,7 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from base import Attribute
-from entity import Entity, format_date, parse_date
+from entity import Entity
+from utils import parse_date, format_date
 from entity_types import CreatorType
 from simple_objects import Gender
 import utils

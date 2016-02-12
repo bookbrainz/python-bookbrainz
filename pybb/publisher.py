@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from entity import Entity, format_date, parse_date
+from entity import Entity
+from utils import parse_date, format_date
 from entity_types import PublisherType
 from base import Attribute
 import utils

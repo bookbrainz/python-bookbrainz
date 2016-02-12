@@ -16,7 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from base import Attribute
-from entity import Entity, format_date, parse_date
+from entity import Entity
+from utils import parse_date, format_date
 from publication import Publication
 from publisher import Publisher
 from simple_objects import CreatorCredit, Language, EditionFormat, EditionStatus
