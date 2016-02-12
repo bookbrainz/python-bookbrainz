@@ -29,6 +29,30 @@ from revision import EntityRevision
 from simple_objects import Alias, Identifier, Disambiguation, Annotation
 
 
+def aliases_from_json(json_data):
+    return [Alias.from_json(alias) for alias in json_data['objects']]
+
+
+def identifiers_from_json(json_data):
+    return [Identifier.from_json(id) for id in json_data['objects']]
+
+
+def relationships_from_json(json_data):
+    return [Relationship.from_json(rel) for rel in json_data['objects']]
+
+
+def format_date(date, precision):
+    if date is None:
+        return None
+
+    if precision == 'YEAR':
+        return '{:02}'.format(date.year)
+    elif precision == 'MONTH':
+        return '{:02}-{:02}'.format(date.year, date.month)
+    else:
+        return '{:02}-{:02}-{:02}'.format(date.year, date.month, date.day)
+
+
 class Entity(Base):
     entity_gid = Attribute('entity_gid')
     uri = Attribute('uri')
@@ -215,30 +239,6 @@ class Entity(Base):
     @staticmethod
     def get_disambiguation_uri(id, agent):
         return '{}/entity/{}/disambiguation'.format(agent.host_name, id)
-
-
-def aliases_from_json(json_data):
-    return [Alias.from_json(alias) for alias in json_data['objects']]
-
-
-def identifiers_from_json(json_data):
-    return [Identifier.from_json(id) for id in json_data['objects']]
-
-
-def relationships_from_json(json_data):
-    return [Relationship.from_json(rel) for rel in json_data['objects']]
-
-
-def format_date(date, precision):
-    if date is None:
-        return None
-
-    if precision == 'YEAR':
-        return '{:02}'.format(date.year)
-    elif precision == 'MONTH':
-        return '{:02}-{:02}'.format(date.year, date.month)
-    else:
-        return '{:02}-{:02}-{:02}'.format(date.year, date.month, date.day)
 
 
 def parse_date(date):
