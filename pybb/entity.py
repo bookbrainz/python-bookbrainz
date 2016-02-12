@@ -22,7 +22,7 @@ from dateutil.parser import parse as parse_datetime
 
 from base import Base, Attribute
 from parallel_requests import RequestQueue
-from pybb import default_agent
+from pybb import default_agent, entity_type_name_to_class
 from relationship import Relationship
 from revision import EntityRevision
 from simple_objects import Alias, Identifier, Disambiguation, Annotation
@@ -31,7 +31,7 @@ from simple_objects import Alias, Identifier, Disambiguation, Annotation
 class Entity(Base):
     entity_gid = Attribute('entity_gid')
     uri = Attribute('uri')
-    type = Attribute('type', ws_name='_type')
+    type = Attribute('type', ws_name='_type', parse=entity_type_name_to_class)
 
     last_updated = Attribute('last_updated', parse=parse_datetime)
 
@@ -50,6 +50,8 @@ class Entity(Base):
 
     relationships = Attribute('relationships', parse=relationships_from_json)
     relationships_uri = Attribute('relationships_uri')
+
+    revision = Attribute('revision', cls=EntityRevision)
 
     def __init__(self):
         super(Entity, self).__init__()

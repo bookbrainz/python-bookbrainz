@@ -14,8 +14,7 @@ from simple_objects import Identifier, IdentifierType, Alias, Annotation,\
 from work import Work
 
 
-@staticmethod
-def type_to_class(type_name):
+def entity_type_name_to_class(type_name):
     return {
         "Creator": Creator,
         "Work": Work,
@@ -23,5 +22,3 @@ def type_to_class(type_name):
         "Publisher": Publisher,
         "Publication": Publication
     }[type_name]
-
-Entity.type_to_class = type_to_class
