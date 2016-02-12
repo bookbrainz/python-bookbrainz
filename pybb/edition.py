@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from base import Attribute
 from entity import Entity, format_date, parse_date
 from publication import Publication
 from publisher import Publisher
@@ -22,65 +23,35 @@ from simple_objects import CreatorCredit, Language, EditionFormat, EditionStatus
 
 
 class Edition(Entity):
+    release_date = Attribute('release_date', parse=parse_date)
+    release_date_precision = Attribute('release_date_precision')
+
+    # Number of pages
+    pages = Attribute('pages')
+
+    # Dimensions, stored as integer millimetre values
+    width = Attribute('width')
+    height = Attribute('height')
+    depth = Attribute('depth')
+
+    # Weight in grams
+    weight = Attribute('weight')
+
+    creator_credit = Attribute('creator_credit', cls=CreatorCredit)
+
+    language = Attribute('language', cls=Language)
+
+    edition_format = Attribute('edition_format', cls=EditionFormat)
+    edition_status = Attribute('edition_status')
+
+    publisher = Attribute('publisher', cls=Publisher)
+    publisher_uri = Attribute('publisher_uri')
+
+    publication = Attribute('publication', cls=Publication)
+    publication_uri = Attribute('publication_uri')
+
     def __init__(self):
         super(Edition, self).__init__()
-
-        self.release_date = None
-        self.release_date_precision = None
-
-        self.pages = None
-
-        # Dimensions, stored as integer millimetre values
-        self.width = None
-        self.height = None
-        self.depth = None
-
-        # Weight in grams
-        self.weight = None
-
-        self.creator_credit = None
-        self.language = None
-        self.edition_format = None
-        self.edition_status = None
-
-        self.publisher = None
-        self.publication = None
-
-        self.publisher_uri = None
-        self.publication_uri = None
-
-    def fetch_from_json_filled(self, json_data):
-        super(Edition, self).fetch_from_json_filled(json_data)
-
-        self.release_date = parse_date(json_data['release_date'])
-        self.release_date_precision = json_data['release_date_precision']
-
-        self.pages = json_data['pages']
-
-        self.width = json_data['width']
-        self.height = json_data['height']
-        self.depth = json_data['depth']
-
-        self.weight = json_data['weight']
-
-        self.creator_credit = \
-            CreatorCredit.from_json(json_data['creator_credit'])
-        self.language = \
-            Language.from_json(json_data['language'])
-        self.edition_format = \
-            EditionFormat.from_json(json_data['edition_format'])
-        self.edition_status = \
-            EditionStatus.from_json(json_data['edition_status'])
-
-        if 'publisher' in json_data:
-            self.publisher = \
-                Publisher.from_json(json_data['publisher'])
-        if 'publication' in json_data:
-            self.publication = \
-                Publication.from_json(json_data['publication'])
-
-        self.publisher_uri = json_data['publisher_uri']
-        self.publication_uri = json_data['publication_uri']
 
     def release(self):
         return format_date(self.release_date, self.release_date_precision)
