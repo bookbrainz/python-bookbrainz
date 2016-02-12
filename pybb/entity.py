@@ -18,9 +18,9 @@
 """This module specifies a class, Resource, which is designed to be used as the
 base class for all resource models specified in this package."""
 
-from dateutil.parser import parse as _parse_date
+from dateutil.parser import parse as parse_datetime
 
-from base import Base
+from base import Base, Attribute
 from parallel_requests import RequestQueue
 from pybb import default_agent
 from relationship import Relationship
@@ -29,75 +29,30 @@ from simple_objects import Alias, Identifier, Disambiguation, Annotation
 
 
 class Entity(Base):
+    entity_gid = Attribute('entity_gid')
+    uri = Attribute('uri')
+    type = Attribute('type', ws_name='_type')
+
+    last_updated = Attribute('last_updated', parse=parse_datetime)
+
+    aliases = Attribute('aliases', parse=aliases_from_json)
+    aliases_uri = Attribute('aliases_uri')
+
+    annotation = Attribute('annotation', cls=Annotation)
+    annotation_uri = Attribute('annotation_uri')
+
+    disambiguation = Attribute('disambiguation', cls=Disambiguation)
+    disambiguation_uri = Attribute('disambiguation_uri')
+
+    identifiers = Attribute('identifiers', parse=identifiers_from_json)
+    # Commented due to bug that should be named but it wasn't
+    # identifiers_uri = Attribute('identifiers_uri')
+
+    relationships = Attribute('relationships', parse=relationships_from_json)
+    relationships_uri = Attribute('relationships_uri')
+
     def __init__(self):
         super(Entity, self).__init__()
-        self.entity_gid = None
-        self.uri = None
-        self.type = None
-
-        self.last_updated = None
-
-        self.annotation = None
-        self.annotation_uri = None
-
-        self.disambiguation = None
-        self.disambiguation_uri = None
-
-        self.default_alias = None
-        self.aliases = None
-        self.aliases_uri = None
-
-        self.identifiers = None
-        self.identifiers_uri = None
-
-        self.relationships = None
-        self.relationships_uri = None
-
-        self.revision = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.entity_gid = json_data['entity_gid']
-        self.uri = json_data['uri']
-        self.type = Entity.type_to_class(json_data['_type'])
-        self.revision = EntityRevision.from_json(json_data['revision'])
-        self.last_updated = parse_date(json_data['last_updated'])
-
-        self.default_alias = Alias.from_json(json_data['default_alias'])
-
-        """
-        self.aliases_uri = json_data['aliases_uri']
-        self.relationships_uri = json_data['relationships_uri']
-        self.identifiers_uri = json_data['identifiers_uri']
-        self.disambiguation_uri = json_data['disambiguation_uri']
-        self.annotation_uri = json_data['annotation_uri']
-        """
-
-        if 'aliases' in json_data:
-            self.aliases = aliases_from_json(json_data['aliases'])
-        else:
-            self.aliases = None
-
-        if 'relationships' in json_data:
-            self.relationships = \
-                relationships_from_json(json_data['relationships'])
-        else:
-            self.relationships = None
-
-        if 'identifiers' in json_data:
-            self.identifiers = identifiers_from_json(json_data['identifiers'])
-        else:
-            self.identifiers = None
-
-        if 'annotation' in json_data:
-            self.annotation = Annotation.from_json(json_data['annotation'])
-        else:
-            self.annotation = None
-
-        if 'disambiguation' in json_data:
-            self.disambiguation = \
-                Disambiguation.from_json(json_data['disambiguation'])
-        else:
-            self.disambiguation = None
 
     @classmethod
     def get_multiple_ids(cls, ids, included, agent=default_agent):
@@ -285,6 +240,6 @@ def format_date(date, precision):
 
 def parse_date(date):
     if date:
-        return _parse_date(date).date()
+        return parse_datetime(date).date()
     else:
         return None
