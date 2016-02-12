@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from entity import Entity, Attribute
+from base import Attribute
+from entity import Entity
 from entity_types import WorkType
 from simple_objects import Language
 
@@ -30,7 +31,6 @@ class Work(Entity):
     @staticmethod
     def get_uri(id, agent):
         return '{}/work/{}'.format(agent.host_name, id)
-
 
 def languages_from_json(json_data):
     return [Language.from_json(lang) for lang in json_data]
