@@ -74,15 +74,14 @@ class Base(object):
 class Attribute(object):
     """Attribute class
     """
-    def __init__(self, name, ws_name='', nullable=True, parse=None, cls=None):
+    def __init__(self, name, ws_name='', parse=None, cls=None):
         self.attr_name = name
         self.ws_name = ws_name if ws_name else name
-        self.nullable = nullable
         self.parse = parse
         self.cls = cls
 
     def set_from_json(self, instance, json_data):
-        value = self.get_value_from_name(json_data, self.ws_name)
+        value = Attribute.get_value_by_ws_name(json_data, self.ws_name)
 
         if self.parse:
             value = self.parse(value)
@@ -92,13 +91,11 @@ class Attribute(object):
 
         setattr(instance, self.attr_name, value)
 
-    def get_value_from_name(self, json_data, ws_name):
+    @staticmethod
+    def get_value_by_ws_name(json_data, ws_name):
         if type(ws_name) is tuple:
             value = json_data
             for name in ws_name:
-                if not self.nullable and not json_data.get(name):
-                    raise ValueError('Attribute isn\'t nullable')
-
                 value = value[name]
         else:
             value = json_data[ws_name]
