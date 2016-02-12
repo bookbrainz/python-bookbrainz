@@ -12,3 +12,5 @@ from revision import EntityRevision
 from simple_objects import Identifier, IdentifierType, Alias, Annotation,\
     Disambiguation, Language, EditionStatus, EditionFormat, Gender
 from work import Work
+
+# TODO updated Licenses in files (from v3 to v2)
