@@ -15,28 +15,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from base import Base
+from base import Base, Attribute
 from user import User
 
 
 class EntityRevision(Base):
+    revision_id = Attribute('revision_id')
+    created_at = Attribute('created_at')
+    parent_id = Attribute('parent_id')
+    note = Attribute('note')
+    user = Attribute('user', cls=User)
+    uri = Attribute('uri')
+    entity_uri = Attribute('entity_uri')
+
     def __init__(self):
         super(EntityRevision, self).__init__()
-
-        self.revision_id = None
-        self.user = None
-        self.created_at = None
-        self.parent_id = None
-        self.note = None
-        self.entity_uri = None
-        self.uri = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.created_at = json_data['created_at']
-        self.entity_uri = json_data['entity_uri']
-        self.note = json_data['note']
-        self.parent_id = json_data['parent_id']
-        self.revision_id = json_data['revision_id']
-        self.uri = json_data['uri']
-
-        self.user = User.from_json(json_data['user'])

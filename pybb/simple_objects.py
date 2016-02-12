@@ -15,142 +15,91 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from base import Base
+from base import Base, Attribute
+from dateutil.parser import parse as parse_datetime
 
 
 class Annotation(Base):
+    annotation_id = Attribute('annotation_id')
+    content = Attribute('content')
+    created_at = Attribute('created_at', parse=parse_datetime)
+
     def __init__(self):
         super(Annotation, self).__init__()
 
-        self.annotation_id = None
-        self.content = None
-        self.created_at = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.annotation_id = json_data['annotation_id']
-        self.content = json_data['content']
-        self.created_at = json_data['created_at']
-
 
 class Disambiguation(Base):
+    disambiguation_id = Attribute('disambiguation_id')
+    comment = Attribute('comment')
+
     def __init__(self):
         super(Disambiguation, self).__init__()
 
-        self.disambiguation_id = None
-        self.comment = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.disambiguation_id = json_data['disambiguation_id']
-        self.comment = json_data['comment']
-
-
-class Alias(Base):
-    def __init__(self):
-        super(Alias, self).__init__()
-
-        self.alias_id = None
-        self.name = None
-        self.sort_name = None
-        self.primary = None
-        self.language = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.alias_id = json_data['alias_id']
-        self.name = json_data['name']
-        self.sort_name = json_data['sort_name']
-        self.primary = json_data['primary']
-
-        self.language = Language()
-        self.language.fetch_from_json(json_data['language'])
-
-
-class Identifier(Base):
-    def __init__(self):
-        super(Identifier, self).__init__()
-
-        self.identifier_id = None
-        self.identifier_type = None
-        self.value = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.identifier_id = json_data['identifier_id']
-        self.value = json_data['value']
-
-        self.identifier_type = \
-            IdentifierType.from_json(json_data['identifier_type'])
-
-
-class IdentifierType(Base):
-    def __init__(self):
-        super(IdentifierType, self).__init__()
-
-        self.identifier_type_id = None
-        self.label = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.identifier_type_id = json_data['identifier_type_id']
-        self.label = json_data['label']
-
-
-class Gender(Base):
-    def __init__(self):
-        super(Gender, self).__init__()
-
-        self.gender_id = None
-        self.name = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.gender_id = json_data['gender_id']
-        self.name = json_data['name']
-
 
 class Language(Base):
+    language_id = Attribute('language_id')
+    name = Attribute('name')
+
     def __init__(self):
         super(Language, self).__init__()
 
-    language_id = None
-    name = None
 
-    def fetch_from_json_filled(self, json_data):
-        self.language_id = json_data['language_id']
-        self.name = json_data['name']
+class Alias(Base):
+    alias_id = Attribute('alias_id')
+    name = Attribute('name')
+    sort_name = Attribute('sort_name')
+    primary = Attribute('primary')
+    language = Attribute('language', cls=Language)
+
+    def __init__(self):
+        super(Alias, self).__init__()
+
+
+class IdentifierType(Base):
+    identifier_type_id = Attribute('identifier_type_id')
+    label = Attribute('label')
+
+    def __init__(self):
+        super(IdentifierType, self).__init__()
+
+
+class Identifier(Base):
+    identifier_id = Attribute('identifier_id')
+    value = Attribute('value')
+    identifier_type = Attribute('identifier_type', IdentifierType)
+
+    def __init__(self):
+        super(Identifier, self).__init__()
+
+
+class Gender(Base):
+    gender_id = Attribute('gender_id')
+    name = Attribute('name')
+
+    def __init__(self):
+        super(Gender, self).__init__()
 
 
 class EditionFormat(Base):
+    edition_format_id = Attribute('edition_format_id')
+    label = Attribute('label')
+
     def __init__(self):
         super(EditionFormat, self).__init__()
 
-        self.edition_format_id = None
-        self.label = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.edition_format_id = json_data['edition_format_id']
-        self.label = json_data['label']
-
 
 class EditionStatus(Base):
+    edition_status_id = Attribute('edition_status_id')
+    label = Attribute('label')
+
     def __init__(self):
         super(EditionStatus, self).__init__()
 
-        self.edition_status_id = None
-        self.label = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.edition_status_id = json_data['edition_status_id']
-        self.label = json_data['label']
-
 
 class CreatorCredit(Base):
-    def __init__(self):
-        super(CreatorCredit, self).__init__()
-        self.begin_phrase = None
-        self.creator_credit_id = None
-        self.names = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.begin_phrase = json_data['begin_phrase']
-        self.creator_credit_id = json_data['creator_credit_id']
-        self.names = None  # TODO implement it
+    begin_phrase = Attribute('begin_phrase')
+    creator_credit_id = Attribute('creator_credit_id')
+    names = Attribute('names') # TODO implement it
 
 
 # TODO implement it

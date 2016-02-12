@@ -26,8 +26,10 @@ class Base(object):
 
     This class has no attributes and args in constructor.
     """
+
     def __init__(self):
-        pass
+        for attr in self.get_attributes():
+            setattr(self, attr.attr_name, None)
 
     def fetch_from_json(self, json_data):
         """ Parses json_data to called object
@@ -49,7 +51,9 @@ class Base(object):
         :param json_data: JSON formatted data
         :return: None
         """
-        raise NotImplementedError
+        for attr in self.get_attributes():
+            attr.set_from_json(self, json_data)
+
 
     @classmethod
     def from_json(cls, json_data):
@@ -62,11 +66,39 @@ class Base(object):
         instance.fetch_from_json(json_data)
         return instance
 
-    def to_json(self):
-        if self:
-            return self.to_json_filled()
-        else:
-            return None
+    def get_attributes(self):
+        cls = self.__class__
+        candidates = [getattr(cls, attr) for attr in dir(cls)]
+        return [value for value in candidates if isinstance(value, Attribute)]
 
-    def to_json_filled(self):
-        raise NotImplementedError
+
+class Attribute(object):
+    """Attribute class
+    """
+    def __init__(self, name, ws_name='', parse=None, cls=None):
+        self.attr_name = name
+        self.ws_name = ws_name if ws_name else name
+        self.parse = parse
+        self.cls = cls
+
+    def set_from_json(self, instance, json_data):
+        value = Attribute.get_value_by_ws_name(json_data, self.ws_name)
+
+        if value and self.parse:
+            value = self.parse(value)
+
+        if value and self.cls:
+            value = self.cls.from_json(value)
+
+        setattr(instance, self.attr_name, value)
+
+    @staticmethod
+    def get_value_by_ws_name(json_data, ws_name):
+        if type(ws_name) is tuple:
+            value = json_data
+            for name in ws_name:
+                value = value[name]
+        else:
+            value = json_data.get(ws_name)
+
+        return value

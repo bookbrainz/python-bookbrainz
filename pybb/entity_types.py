@@ -15,48 +15,36 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from base import Base
+from base import Base, Attribute
 
 
 class WorkType(Base):
+    work_type_id = Attribute('work_type_id')
+    label = Attribute('label')
+
     def __init__(self):
         super(WorkType, self).__init__()
-        self.work_type_id = None
-        self.label = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.work_type_id = json_data['work_type_id']
-        self.label = json_data['label']
 
 
 class PublicationType(Base):
+    publication_type_id = Attribute('publication_type_id')
+    label = Attribute('label')
+
     def __init__(self):
         super(PublicationType, self).__init__()
-        self.publication_type_id = None
-        self.label = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.publication_type_id = json_data['publication_type_id']
-        self.label = json_data['label']
 
 
 class CreatorType(Base):
+    creator_type_id = Attribute('creator_type_id')
+    label = Attribute('label')
+
     def __init__(self):
         super(CreatorType, self).__init__()
-        self.creator_type_id = None
-        self.label = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.creator_type_id = json_data['creator_type_id']
-        self.label = json_data['label']
 
 
 class PublisherType(Base):
+    publisher_type_id = Attribute('publisher_type_id')
+    label = Attribute('label')
+
     def __init__(self):
         super(PublisherType, self).__init__()
-        self.publisher_type_id = None
-        self.label = None
-
-    def fetch_from_json_filled(self, json_data):
-        self.publisher_type_id = json_data['publisher_type_id']
-        self.label = json_data['label']

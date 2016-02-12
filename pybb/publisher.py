@@ -15,36 +15,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from entity import Entity, format_date, parse_date
+from entity import Entity
+from utils import parse_date, format_date
 from entity_types import PublisherType
+from base import Attribute
+import utils
 
 
 class Publisher(Entity):
+    publisher_type = Attribute('publisher_type', cls=PublisherType)
+
+    begin_date = Attribute('begin_date', parse=parse_date)
+    begin_date_precision = Attribute('begin_date_precision')
+
+    end_date = Attribute('end_date', parse=parse_date)
+    end_date_precision = Attribute('end_date_precision')
+
+    ended = Attribute('ended')
+
     def __init__(self):
         super(Publisher, self).__init__()
-        self.publisher_type = None
-
-        self.begin_date = None
-        self.begin_date_precision = None
-
-        self.end_date = None
-        self.end_date_precision = None
-
-        self.ended = None
-
-    def fetch_from_json_filled(self, json_data):
-        super(Publisher, self).fetch_from_json_filled(json_data)
-
-        self.begin_date = parse_date(json_data['begin_date'])
-        self.begin_date_precision = json_data['begin_date_precision']
-
-        self.end_date = parse_date(json_data['end_date'])
-        self.end_date_precision = json_data['end_date_precision']
-
-        self.publisher_type = \
-            PublisherType.from_json(json_data['publisher_type'])
-
-        self.ended = json_data['ended']
 
     def begin(self):
         return format_date(self.begin_date, self.begin_date_precision)
@@ -55,3 +45,5 @@ class Publisher(Entity):
     @staticmethod
     def get_uri(id, agent):
         return '{}/publisher/{}'.format(agent.host_name, id)
+
+utils.type_to_class['publisher'] = Publisher

@@ -15,13 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from base import Base
+from base import Base, Attribute
 
 
 class User(Base):
+    user_id = Attribute('user_id')
+
     def __init__(self):
         super(self.__class__, self).__init__()
-        self.user_id = None
 
-    def fetch_from_json_filled(self, json_data):
-        self.user_id = json_data['user_id']

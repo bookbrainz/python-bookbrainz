@@ -15,21 +15,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from base import Attribute
 from entity import Entity
 from entity_types import PublicationType
+import utils
 
 
 class Publication(Entity):
+    publication_type = Attribute('publication_type', cls=PublicationType)
+
     def __init__(self):
         super(Publication, self).__init__()
-        self.publication_type = None
-
-    def fetch_from_json_filled(self, json_data):
-        super(Publication, self).fetch_from_json_filled(json_data)
-
-        self.publication_type = \
-            PublicationType.from_json(json_data['publication_type'])
 
     @staticmethod
     def get_uri(id, agent):
         return '{}/publication/{}'.format(agent.host_name, id)
+
+utils.type_to_class['publication'] = Publication
