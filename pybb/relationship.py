@@ -32,19 +32,6 @@ class RelationshipType(Base):
         super(RelationshipType, self).__init__()
 
 
-class Relationship(Base):
-    relationship_id = Attribute('relationship_id')
-    last_updated = Attribute('last_updated', parse=parse_datetime)
-    relationship_type = Attribute('relationship_type', cls=RelationshipType)
-    uri = Attribute('uri')
-
-    entities = Attribute('entities', parse=relationship_entities_from_json)
-    texts = Attribute('texts', parse=relationship_texts_from_json)
-
-    def __init__(self):
-        super(Relationship, self).__init__()
-
-
 class RelationshipEntity(Base):
     type = Attribute('type', ws_name=('entity', '_type'))
     entity_gid = Attribute('entity_gid', ws_name=('entity', 'entity_gid'))
@@ -71,3 +58,18 @@ def relationship_entities_from_json(json_data):
 def relationship_texts_from_json(json_data):
     return [RelationshipText.from_json(text)
             for text in json_data]
+
+
+class Relationship(Base):
+    relationship_id = Attribute('relationship_id')
+    last_updated = Attribute('last_updated', parse=parse_datetime)
+    relationship_type = Attribute('relationship_type', cls=RelationshipType)
+    uri = Attribute('uri')
+
+    entities = Attribute('entities', parse=relationship_entities_from_json)
+    texts = Attribute('texts', parse=relationship_texts_from_json)
+
+    def __init__(self):
+        super(Relationship, self).__init__()
+
+
