@@ -70,10 +70,11 @@ class Base(object):
         candidates = (getattr(self, attr) for attr in dir(self.__class__))
         return (value for value in candidates if isinstance(value, Attribute))
 
+
 class Attribute(object):
     """Attribute class
     """
-    def __init__(self, name, ws_name='', nullable=False, parse=None, cls=None):
+    def __init__(self, name, ws_name='', nullable=True, parse=None, cls=None):
         self.attr_name = name
         self.ws_name = ws_name if ws_name else name
         self.nullable = nullable
