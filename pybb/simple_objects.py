@@ -36,6 +36,14 @@ class Disambiguation(Base):
         super(Disambiguation, self).__init__()
 
 
+class Language(Base):
+    language_id = Attribute('language_id')
+    name = Attribute('name')
+
+    def __init__(self):
+        super(Language, self).__init__()
+
+
 class Alias(Base):
     alias_id = Attribute('alias_id')
     name = Attribute('name')
@@ -47,6 +55,14 @@ class Alias(Base):
         super(Alias, self).__init__()
 
 
+class IdentifierType(Base):
+    identifier_type_id = Attribute('identifier_type_id')
+    label = Attribute('label')
+
+    def __init__(self):
+        super(IdentifierType, self).__init__()
+
+
 class Identifier(Base):
     identifier_id = Attribute('identifier_id')
     value = Attribute('value')
@@ -56,28 +72,12 @@ class Identifier(Base):
         super(Identifier, self).__init__()
 
 
-class IdentifierType(Base):
-    identifier_type_id = Attribute('identifier_type_id')
-    label = Attribute('label')
-
-    def __init__(self):
-        super(IdentifierType, self).__init__()
-
-
 class Gender(Base):
     gender_id = Attribute('gender_id')
     name = Attribute('name')
 
     def __init__(self):
         super(Gender, self).__init__()
-
-
-class Language(Base):
-    language_id = Attribute('language_id')
-    name = Attribute('name')
-
-    def __init__(self):
-        super(Language, self).__init__()
 
 
 class EditionFormat(Base):
