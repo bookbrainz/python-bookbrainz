@@ -22,6 +22,10 @@ from simple_objects import Language
 import utils
 
 
+def languages_from_json(json_data):
+    return [Language.from_json(lang) for lang in json_data]
+
+
 class Work(Entity):
     work_type = Attribute('work_type', cls=WorkType)
     languages = Attribute('languages', parse=languages_from_json)
@@ -32,9 +36,5 @@ class Work(Entity):
     @staticmethod
     def get_uri(id, agent):
         return '{}/work/{}'.format(agent.host_name, id)
-
-
-def languages_from_json(json_data):
-    return [Language.from_json(lang) for lang in json_data]
 
 utils.type_to_class['work'] = Work
