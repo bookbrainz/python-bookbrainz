@@ -15,40 +15,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from base import Attribute
 from entity import Entity, format_date, parse_date
 from entity_types import CreatorType
 from simple_objects import Gender
 
 
 class Creator(Entity):
+    creator_type = Attribute('creator_type', cls=CreatorType)
+
+    begin_date = Attribute('begin_date', parse=parse_date)
+    begin_date_precision = Attribute('begin_date_precision')
+
+    end_date = Attribute('end_date', parse=parse_date)
+    end_date_precision = Attribute('end_date_precision')
+
+    ended = Attribute('ended')
+    country_id = Attribute('country_id')
+    gender = Attribute('gender', cls=Gender)
+
     def __init__(self):
         super(Creator, self).__init__()
-        self.creator_type = None
-
-        self.begin_date = None
-        self.begin_date_precision = None
-
-        self.end_date = None
-        self.end_date_precision = None
-
-        self.ended = None
-        self.country_id = None
-        self.gender = None
-
-    def fetch_from_json_filled(self, json_data):
-        super(Creator, self).fetch_from_json_filled(json_data)
-
-        self.begin_date = parse_date(json_data['begin_date'])
-        self.begin_date_precision = json_data['begin_date_precision']
-
-        self.end_date = parse_date(json_data['end_date'])
-        self.end_date_precision = json_data['end_date_precision']
-
-        self.creator_type = \
-            CreatorType.from_json(json_data['creator_type'])
-        self.gender = \
-            Gender.from_json(json_data['creator'])
-        self.ended = json_data['ended']
 
     def begin(self):
         return format_date(self.begin_date, self.begin_date_precision)
