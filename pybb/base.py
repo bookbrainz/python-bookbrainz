@@ -49,7 +49,8 @@ class Base(object):
     def get_attributes(self):
         cls = self.__class__
         candidates = [getattr(cls, attr) for attr in dir(cls)]
-        return [value for value in candidates if isinstance(value, Attribute)]
+        return [value for value in candidates if
+                getattr(value, '__class__', None) is Attribute]
 
 
 class Attribute(object):
