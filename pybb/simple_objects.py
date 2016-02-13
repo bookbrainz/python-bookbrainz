@@ -24,24 +24,15 @@ class Annotation(Base):
     content = Attribute('content')
     created_at = Attribute('created_at', parse=parse_datetime)
 
-    def __init__(self):
-        super(Annotation, self).__init__()
-
 
 class Disambiguation(Base):
     disambiguation_id = Attribute('disambiguation_id')
     comment = Attribute('comment')
 
-    def __init__(self):
-        super(Disambiguation, self).__init__()
-
 
 class Language(Base):
     language_id = Attribute('language_id')
     name = Attribute('name')
-
-    def __init__(self):
-        super(Language, self).__init__()
 
 
 class Alias(Base):
@@ -51,16 +42,10 @@ class Alias(Base):
     primary = Attribute('primary')
     language = Attribute('language', cls=Language)
 
-    def __init__(self):
-        super(Alias, self).__init__()
-
 
 class IdentifierType(Base):
     identifier_type_id = Attribute('identifier_type_id')
     label = Attribute('label')
-
-    def __init__(self):
-        super(IdentifierType, self).__init__()
 
 
 class Identifier(Base):
@@ -68,40 +53,27 @@ class Identifier(Base):
     value = Attribute('value')
     identifier_type = Attribute('identifier_type', IdentifierType)
 
-    def __init__(self):
-        super(Identifier, self).__init__()
-
 
 class Gender(Base):
     gender_id = Attribute('gender_id')
     name = Attribute('name')
-
-    def __init__(self):
-        super(Gender, self).__init__()
 
 
 class EditionFormat(Base):
     edition_format_id = Attribute('edition_format_id')
     label = Attribute('label')
 
-    def __init__(self):
-        super(EditionFormat, self).__init__()
-
 
 class EditionStatus(Base):
     edition_status_id = Attribute('edition_status_id')
     label = Attribute('label')
 
-    def __init__(self):
-        super(EditionStatus, self).__init__()
-
 
 class CreatorCredit(Base):
     begin_phrase = Attribute('begin_phrase')
     creator_credit_id = Attribute('creator_credit_id')
-    names = Attribute('names')  # TODO implement it
+    names = Attribute('names')
 
 
-# TODO implement it
 class CreatorCreditName(Base):
     pass

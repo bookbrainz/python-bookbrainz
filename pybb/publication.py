@@ -24,9 +24,6 @@ import utils
 class Publication(Entity):
     publication_type = Attribute('publication_type', cls=PublicationType)
 
-    def __init__(self):
-        super(Publication, self).__init__()
-
     @staticmethod
     def get_uri(id, agent):
         return '{}/publication/{}'.format(agent.host_name, id)

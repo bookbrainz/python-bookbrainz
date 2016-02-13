@@ -52,9 +52,6 @@ class Edition(Entity):
     publication = Attribute('publication', cls=Publication)
     publication_uri = Attribute('publication_uri')
 
-    def __init__(self):
-        super(Edition, self).__init__()
-
     def release(self):
         return format_date(self.release_date, self.release_date_precision)
 

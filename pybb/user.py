@@ -21,6 +21,3 @@ from base import Base, Attribute
 class User(Base):
     user_id = Attribute('user_id')
 
-    def __init__(self):
-        super(self.__class__, self).__init__()
-

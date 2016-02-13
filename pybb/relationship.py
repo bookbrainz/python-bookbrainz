@@ -28,9 +28,6 @@ class RelationshipType(Base):
     child_order = Attribute('child_order')
     parent = Attribute('parent')
 
-    def __init__(self):
-        super(RelationshipType, self).__init__()
-
 
 class RelationshipEntity(Base):
     type = Attribute('type', ws_name=('entity', '_type'))
@@ -38,16 +35,10 @@ class RelationshipEntity(Base):
     uri = Attribute('uri', ws_name=('entity', 'uri'))
     position = Attribute('position')
 
-    def __init__(self):
-        super(RelationshipEntity, self).__init__()
-
 
 class RelationshipText(Base):
     position = Attribute('position')
     text = Attribute('text')
-
-    def __init__(self):
-        super(RelationshipText, self).__init__()
 
 
 def relationship_entities_from_json(json_data):
@@ -68,8 +59,5 @@ class Relationship(Base):
 
     entities = Attribute('entities', parse=relationship_entities_from_json)
     texts = Attribute('texts', parse=relationship_texts_from_json)
-
-    def __init__(self):
-        super(Relationship, self).__init__()
 
 

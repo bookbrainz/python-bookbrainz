@@ -30,9 +30,6 @@ class Work(Entity):
     work_type = Attribute('work_type', cls=WorkType)
     languages = Attribute('languages', parse=languages_from_json)
 
-    def __init__(self):
-        super(Work, self).__init__()
-
     @staticmethod
     def get_uri(id, agent):
         return '{}/work/{}'.format(agent.host_name, id)

@@ -33,9 +33,6 @@ class Publisher(Entity):
 
     ended = Attribute('ended')
 
-    def __init__(self):
-        super(Publisher, self).__init__()
-
     def begin(self):
         return format_date(self.begin_date, self.begin_date_precision)
 

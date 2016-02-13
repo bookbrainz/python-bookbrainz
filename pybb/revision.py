@@ -28,5 +28,3 @@ class EntityRevision(Base):
     uri = Attribute('uri')
     entity_uri = Attribute('entity_uri')
 
-    def __init__(self):
-        super(EntityRevision, self).__init__()

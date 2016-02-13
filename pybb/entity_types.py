@@ -22,29 +22,18 @@ class WorkType(Base):
     work_type_id = Attribute('work_type_id')
     label = Attribute('label')
 
-    def __init__(self):
-        super(WorkType, self).__init__()
-
 
 class PublicationType(Base):
     publication_type_id = Attribute('publication_type_id')
     label = Attribute('label')
-
-    def __init__(self):
-        super(PublicationType, self).__init__()
 
 
 class CreatorType(Base):
     creator_type_id = Attribute('creator_type_id')
     label = Attribute('label')
 
-    def __init__(self):
-        super(CreatorType, self).__init__()
-
 
 class PublisherType(Base):
     publisher_type_id = Attribute('publisher_type_id')
     label = Attribute('label')
 
-    def __init__(self):
-        super(PublisherType, self).__init__()

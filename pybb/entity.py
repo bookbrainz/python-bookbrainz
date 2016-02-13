@@ -68,9 +68,6 @@ class Entity(Base):
 
     revision = Attribute('revision', cls=EntityRevision)
 
-    def __init__(self):
-        super(Entity, self).__init__()
-
     @classmethod
     def get_multiple_ids(cls, ids, included, agent=default_agent):
         responses_json = cls.get_multiple_ids_json(ids, included, agent)
