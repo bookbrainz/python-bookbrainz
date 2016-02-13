@@ -99,7 +99,7 @@ class EditionStatus(Base):
 class CreatorCredit(Base):
     begin_phrase = Attribute('begin_phrase')
     creator_credit_id = Attribute('creator_credit_id')
-    names = Attribute('names') # TODO implement it
+    names = Attribute('names')  # TODO implement it
 
 
 # TODO implement it

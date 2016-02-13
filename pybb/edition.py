@@ -23,6 +23,7 @@ from publisher import Publisher
 from simple_objects import CreatorCredit, Language, EditionFormat, EditionStatus
 import utils
 
+
 class Edition(Entity):
     release_date = Attribute('release_date', parse=parse_date)
     release_date_precision = Attribute('release_date_precision')
