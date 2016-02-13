@@ -68,6 +68,9 @@ class Entity(Base):
 
     revision = Attribute('revision', cls=EntityRevision)
 
+    allowed_includes = ['aliases', 'relationships', 'identifiers',
+                        'annotation', 'disambiguation']
+
     @classmethod
     def get_multiple_ids(cls, ids, included, agent=default_agent):
         responses_json = cls.get_multiple_ids_json(ids, included, agent)
@@ -103,7 +106,7 @@ class Entity(Base):
         # First round of requests
         for id in ids:
             responses_json.append(
-                cls.add_id_get(id, request_queue, included, agent)
+                cls.add_id_get(id, request_queue, agent)
             )
         request_queue.send_all()
 
@@ -122,27 +125,24 @@ class Entity(Base):
         # First round of requests
         for cls, id in zip(classes, ids):
             responses_json.append(
-                cls.add_id_get(id, request_queue, included, agent)
+                cls.add_id_get(id, request_queue, agent)
             )
         request_queue.send_all()
 
         # Second round of requests (uses data from the first one)
         for cls, response in zip(classes, responses_json):
-            response.update(
                 cls.add_id_get_more(response, request_queue, included)
-            )
         request_queue.send_all()
 
         return responses_json
 
     @classmethod
-    def add_id_get(cls, id, request_queue, included, agent):
+    def add_id_get(cls, id, request_queue, agent):
         return request_queue.get_request(cls.get_uri(id, agent))
 
     @classmethod
     def add_id_get_more(cls, entity_json, request_queue, included):
-        for attr in ['aliases', 'relationships', 'identifiers', 'annotation',
-                     'disambiguation']:
+        for attr in cls.allowed_includes:
             if attr in included:
                 entity_json[attr] = \
                     request_queue.get_request(

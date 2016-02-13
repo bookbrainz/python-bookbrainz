@@ -52,29 +52,10 @@ class Edition(Entity):
     publication = Attribute('publication', cls=Publication)
     publication_uri = Attribute('publication_uri')
 
+    allowed_includes = Entity.allowed_includes + ['publisher', 'publication']
+
     def release(self):
         return format_date(self.release_date, self.release_date_precision)
-
-    @classmethod
-    def add_id_get_more(cls, edition_json, request_queue, included):
-        edition_new_data = {}
-        if 'publisher' in included:
-            edition_new_data['publisher'] = \
-                request_queue.get_request(cls.get_publisher_uri(edition_json))
-
-        if 'publication' in included:
-            edition_new_data['publication'] = \
-                request_queue.get_request(cls.get_publication_uri(edition_json))
-
-        return edition_new_data
-
-    @staticmethod
-    def get_publisher_uri(entity_json):
-        return entity_json['publisher_uri']
-
-    @staticmethod
-    def get_publication_uri(entity_json):
-        return entity_json['publication_uri']
 
     @staticmethod
     def get_uri(id, agent):
