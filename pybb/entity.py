@@ -109,9 +109,7 @@ class Entity(Base):
 
         # Second round of requests (uses data from the first one)
         for response in responses_json:
-            response.update(
                 cls.add_id_get_more(response, request_queue, included)
-            )
         request_queue.send_all()
 
         return responses_json
@@ -139,43 +137,17 @@ class Entity(Base):
 
     @classmethod
     def add_id_get(cls, id, request_queue, included, agent):
-        entity_request = request_queue.get_request(cls.get_uri(id, agent))
-
-        if 'aliases' in included:
-            entity_request['aliases'] = \
-                request_queue.get_request(
-                    cls.get_aliases_uri(id, agent)
-                )
-
-        if 'relationships' in included:
-            entity_request['relationships'] = \
-                request_queue.get_request(
-                    cls.get_relationships_uri(id, agent)
-                )
-
-        if 'identifiers' in included:
-            entity_request['identifiers'] = \
-                request_queue.get_request(
-                    cls.get_identifiers_uri(id, agent)
-                )
-
-        if 'annotation' in included:
-            entity_request['annotation'] = \
-                request_queue.get_request(
-                    cls.get_annotation_uri(id, agent)
-                )
-
-        if 'disambiguation' in included:
-            entity_request['disambiguation'] = \
-                request_queue.get_request(
-                    cls.get_disambiguation_uri(id, agent)
-                )
-
-        return entity_request
+        return request_queue.get_request(cls.get_uri(id, agent))
 
     @classmethod
     def add_id_get_more(cls, entity_json, request_queue, included):
-        return {}
+        for attr in ['aliases', 'relationships', 'identifiers', 'annotation',
+                     'disambiguation']:
+            if attr in included:
+                entity_json[attr] = \
+                    request_queue.get_request(
+                        cls.get_uri_for_attr(entity_json, attr)
+                    )
 
     @classmethod
     def delete_multiple_ids(cls, ids, revision_notes, agent=default_agent):
@@ -208,23 +180,5 @@ class Entity(Base):
         return '{}/entity/{}'.format(agent.host_name, id)
 
     @staticmethod
-    def get_aliases_uri(id, agent):
-        return '{}/entity/{}/aliases'.format(agent.host_name, id)
-
-    @staticmethod
-    def get_relationships_uri(id, agent):
-        return '{}/entity/{}/relationships'.format(agent.host_name, id)
-
-    @staticmethod
-    def get_identifiers_uri(id, agent):
-        return '{}/entity/{}/identifiers'.format(agent.host_name, id)
-
-    @staticmethod
-    def get_annotation_uri(id, agent):
-        return '{}/entity/{}/annotation'.format(agent.host_name, id)
-
-    @staticmethod
-    def get_disambiguation_uri(id, agent):
-        return '{}/entity/{}/disambiguation'.format(agent.host_name, id)
-
-
+    def get_uri_for_attr(json_entity, attr_name):
+        return json_entity.get(attr_name + '_uri')
