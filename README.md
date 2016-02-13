@@ -6,4 +6,4 @@
 [![Code Climate](https://codeclimate.com/github/bookbrainz/python-bookbrainz/badges/gpa.svg)](https://codeclimate.com/github/bookbrainz/python-bookbrainz)
 [![Issue Count](https://codeclimate.com/github/bookbrainz/python-bookbrainz/badges/issue_count.svg)](https://codeclimate.com/github/bookbrainz/python-bookbrainz)
 [![License](http://img.shields.io/:license-GPLv2-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-2.0.html)
-[![Tested Python version](http://img.shields.io/:Tested Python version-2.7-green.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-2.0.html)
+[![Tested Python version](http://img.shields.io/:python tested-v2.7-orange.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-2.0.html)
